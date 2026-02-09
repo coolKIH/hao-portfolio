@@ -4,7 +4,7 @@ interface PostPageProps {
 
 export default function PostPage({ params }: PostPageProps) {
     return (
-        <div className="space-y-4 p-4">
+        <div className="space-y-4">
             <h1 className="text-2xl font-bold text-black dark:text-zinc-50">
                 博客文章: {params.slug}
             </h1>
