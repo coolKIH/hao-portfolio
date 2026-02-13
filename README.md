@@ -33,7 +33,7 @@ The project is structured to separate logic from content:
     ```
 
 ## 📝 Ongoing Updates
-The project is in its early stages. Current focus areas include:
+The project is still in its early stages. Current focus areas include:
 * **UI/UX Development**: Implementing the core layout and styling system.
-* **Content Integration**: Setting up the MDX processing pipeline.
-* **Information Architecture**: Most pages (including Projects and Blog) currently contain placeholder information and will be populated as content becomes available.
+* **Content Integration**: Improving Blog page and setting up Projects page.
+* **Information Architecture**: There is still placeholder information and they will be updated when content becomes available.

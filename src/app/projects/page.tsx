@@ -1,4 +1,9 @@
 import { ProjectCard } from "@/components/ProjectCard";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Projects',
+}
 
 export default function Projects() {
     const projects = [
@@ -23,7 +28,7 @@ export default function Projects() {
 
     return (
         <div className="space-y-4">
-            <h1 className="text-3xl font-semibold text-black dark:text-zinc-50">项目</h1>
+            <h1 className="text-3xl font-semibold text-black dark:text-zinc-50">我的作品</h1>
             <div className="grid gap-4 md:grid-cols-2">
                 {projects.map((p) => (
                     <ProjectCard
