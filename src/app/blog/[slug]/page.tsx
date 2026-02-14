@@ -7,7 +7,6 @@ import { cache } from 'react'; // Import React cache
 // --- Memoize the data fetching ---
 // This ensures that generateMetadata and PostPage share the exact same execution context
 const getCachedPost = cache((slug: string) => {
-    // amazonq-ignore-next-line
     return getPostBySlug(slug);
 });
 

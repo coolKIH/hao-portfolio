@@ -51,7 +51,6 @@ function parseMetadata(fileName: string, rawData: any): PostMetadata {
  */
 export function getBlogPosts(): PostMetadata[] {
     // 1. Production cache check
-    // amazonq-ignore-next-line
     if (postsCache && process.env.NODE_ENV === 'production') {
         return postsCache;
     }
@@ -77,7 +76,6 @@ export function getBlogPosts(): PostMetadata[] {
             // 2. Filter by visibility
             return metadata.visibility === 'public' ? [metadata] : [];
         } catch (error) {
-            // amazonq-ignore-next-line
             console.error(`Error parsing MDX file ${fileName}:`, error);
             return []; // Skip this file on error
         }
@@ -107,12 +105,10 @@ export function getLatestPosts(limit: number = 5): PostMetadata[] {
 export function getPostBySlug(slug: string) {
     // 1. Fail-Fast: Reject malformed or suspicious slugs immediately
     if (!slug || !slugRegex.test(slug)) {
-        // amazonq-ignore-next-line
         console.warn(`Invalid slug blocked: ${JSON.stringify(slug)}`);
         return null;
     }
 
-    // amazonq-ignore-next-line
     const fullPath = path.join(BLOG_PATH, `${slug}.mdx`);
 
     try {
@@ -120,7 +116,6 @@ export function getPostBySlug(slug: string) {
         if (!fs.existsSync(fullPath)) {
             return null;
         }
-        // amazonq-ignore-next-line
         const fileContents = fs.readFileSync(fullPath, "utf8");
         const { data, content } = matter(fileContents);
         const metadata = parseMetadata(`${slug}.mdx`, data);
@@ -133,7 +128,6 @@ export function getPostBySlug(slug: string) {
             content,
         };
     } catch (e) {
-        // amazonq-ignore-next-line
         console.error(`Error reading post: ${JSON.stringify(slug)}`, e);
         return null;
     }
