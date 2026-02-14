@@ -1,42 +1,52 @@
 import { getPostBySlug, getBlogPosts } from "@/lib/vault";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
+import { cache } from 'react'; // Import React cache
+
+// --- Memoize the data fetching ---
+// This ensures that generateMetadata and PostPage share the exact same execution context
+const getCachedPost = cache((slug: string) => {
+    // amazonq-ignore-next-line
+    return getPostBySlug(slug);
+});
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
 }): Promise<Metadata> {
     const { slug } = await params;
-    const post = getPostBySlug(slug);
+    const post = getCachedPost(slug); // Use the cached version
 
     if (!post) {
-        return {
-            title: "Post Not Found"
-        };
+        return { title: "Post Not Found" };
     }
 
-    return {
-        title: post.metadata.title
-    };
+    return { title: post.metadata.title };
+}
+
+export async function generateStaticParams() {
+    const posts = getBlogPosts();
+    return posts.map((post) => ({
+        slug: post.slug,
+    }));
 }
 
 export default async function PostPage({ params }: {
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params;
-    const post = getPostBySlug(slug);
+    const post = getCachedPost(slug); // Use the same cached version
 
     if (!post) {
         notFound();
     }
 
     return (
-        <div className="space-y-8">
-            <header>
+        <div>
+            <header className="mb-10">
                 <h1 className="text-3xl font-bold text-black dark:text-zinc-50 mb-2">
                     {post.metadata.title}
                 </h1>
-                {/* date and location */}
                 <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                     <time dateTime={post.metadata.date}>
                         {new Date(post.metadata.date).toLocaleDateString('zh-CN', {
@@ -60,7 +70,7 @@ export default async function PostPage({ params }: {
             </article>
             {post.metadata.tags && (
                 <>
-                    <hr className="w-full border-zinc-100 dark:border-zinc-800 mb-6" />
+                    <hr className="w-full border-zinc-100 dark:border-zinc-800 my-10" />
                     <div className="flex gap-2 mt-1">
                         {post.metadata.tags.map((tag: string) => (
                             <span

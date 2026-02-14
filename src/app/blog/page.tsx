@@ -26,7 +26,7 @@ export default async function Blog({
 
     return (
         <div className="space-y-4">
-            <div className="mb-12">
+            <div className="mb-16">
                 <h1 className="text-3xl font-semibold text-black dark:text-zinc-50">我的文章</h1>
                 <p className="mt-2 text-zinc-600 dark:text-zinc-400">记录一些关于技术、骑行与生活的瞬间。</p>
             </div>
@@ -70,7 +70,7 @@ export default async function Blog({
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex items-center justify-between pt-8">
+                <div className="flex items-center justify-between mt-8">
                     <div className="flex-1 flex">
                         {currentPage < totalPages && (
                             <Link

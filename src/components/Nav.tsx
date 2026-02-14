@@ -6,19 +6,32 @@ export function Nav() {
     const pathname = usePathname();
 
     const links = [
-        { href: "/", label: "首页" },
-        { href: "/about", label: "关于" },
-        { href: "/projects", label: "项目" },
-        { href: "/blog", label: "博客" },
+        {
+            href: "/",
+            label: "首页",
+            matchRule: /^\/$/
+        },
+        {
+            href: "/about",
+            label: "关于",
+            matchRule: /^\/about$/
+        },
+        {
+            href: "/projects",
+            label: "项目",
+            matchRule: /^\/projects$/
+        },
+        {
+            href: "/blog",
+            label: "博客",
+            matchRule: /^\/blog(\/[^/]+)?$/
+        },
     ];
 
     return (
         <nav className="flex gap-8 text-sm text-zinc-600 dark:text-zinc-400">
             {links.map((link) => {
-                const isActive =
-                    link.href === "/"
-                        ? pathname === "/"
-                        : pathname.startsWith(link.href);
+                const isActive = link.matchRule.test(pathname);
 
                 return <Link
                     key={link.href}
