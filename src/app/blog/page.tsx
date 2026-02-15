@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/vault";
 import type { Metadata } from 'next'
+import ZonedTime from "@/components/ZonedTime";
 
 const POSTS_PER_PAGE = 6;
 
@@ -36,13 +37,7 @@ export default async function Blog({
                     <article key={post.slug} className="group flex flex-col items-start py-6 first:pt-0">
                         {/* date and location */}
                         <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-                            <time dateTime={post.date}>
-                                {new Date(post.date).toLocaleDateString('zh-CN', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}
-                            </time>
+                            <ZonedTime dateStr={post.date}></ZonedTime>
                             {post.location && (
                                 <>
                                     <span className="w-1 h-1 rounded-full bg-zinc-400" />

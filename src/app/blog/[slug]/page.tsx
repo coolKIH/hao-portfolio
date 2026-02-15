@@ -2,6 +2,7 @@ import { getPostBySlug, getBlogPosts } from "@/lib/vault";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from 'next';
+import ZonedTime from "@/components/ZonedTime";
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
@@ -40,15 +41,7 @@ export default async function PostPage({ params }: {
                     {post.metadata.title}
                 </h1>
                 <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
-                    <time dateTime={post.metadata.date}>
-                        {new Date(post.metadata.date).toLocaleDateString('zh-CN', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                        })}
-                    </time>
+                    <ZonedTime dateStr={post.metadata.date} mode="datetime"></ZonedTime>
                     {post.metadata.location && (
                         <>
                             <span className="w-1 h-1 rounded-full bg-zinc-400" />
