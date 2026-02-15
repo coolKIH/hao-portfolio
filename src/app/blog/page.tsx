@@ -70,30 +70,28 @@ export default async function Blog({
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex items-center justify-between mt-8">
-                    <div className="flex-1 flex">
-                        {currentPage < totalPages && (
-                            <Link
-                                href={`/blog?page=${currentPage + 1}`}
-                                className="group flex items-center gap-2 text-zinc-500 hover:text-black dark:hover:text-white transition-colors"
-                            >
-                                <span className="transition-transform group-hover:-translate-x-1">←</span>
-                                <span className="text-sm">过去</span>
-                            </Link>
-                        )}
-                    </div>
-                    <div className="flex-1 flex justify-end">
-                        {currentPage > 1 && (
-                            <Link
-                                href={`/blog?page=${currentPage - 1}`}
-                                className="group flex items-center gap-2 text-zinc-500 hover:text-black dark:hover:text-white transition-colors"
-                            >
-                                <span className="text-sm">未来</span>
-                                <span className="transition-transform group-hover:translate-x-1">→</span>
-                            </Link>
-                        )}
-                    </div>
+                <div className="flex items-center justify-center mt-12 gap-x-16">
+                    {/* Past Link (Going back in time) */}
+                    {currentPage < totalPages && (
+                        <Link
+                            href={`/blog?page=${currentPage + 1}`}
+                            className="group flex items-center gap-2 text-zinc-500 hover:text-black dark:hover:text-white transition-colors"
+                        >
+                            <span className="transition-transform group-hover:-translate-x-1">←</span>
+                            <span className="text-sm">过去</span>
+                        </Link>
+                    )}
 
+                    {/* Future Link (Coming back to the present) */}
+                    {currentPage > 1 && (
+                        <Link
+                            href={`/blog?page=${currentPage - 1}`}
+                            className="group flex items-center gap-2 text-zinc-500 hover:text-black dark:hover:text-white transition-colors"
+                        >
+                            <span className="text-sm">未来</span>
+                            <span className="transition-transform group-hover:translate-x-1">→</span>
+                        </Link>
+                    )}
                 </div>
             )}
         </div>
