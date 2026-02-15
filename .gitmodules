@@ -1,3 +1,3 @@
 [submodule "vault"]
 	path = vault
-	url = https://github.com/coolKIH/hao-portfolio-content.git
+	url = ../hao-portfolio-content.git
