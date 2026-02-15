@@ -13,7 +13,7 @@ export default async function Blog({
 }: {
     searchParams: Promise<{ page?: string }>;
 }) {
-    const allPosts = getBlogPosts();
+    const allPosts = await getBlogPosts();
     const { page } = await searchParams;
 
     const currentPage = Number(page) || 1;

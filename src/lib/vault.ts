@@ -1,8 +1,10 @@
-import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
 
-const BLOG_PATH = path.join(process.cwd(), 'vault/blog');
+// --- Configuration ---
+const GITHUB_TOKEN = process.env.VAULT_GITHUB_TOKEN;
+const OWNER = "coolKIH";
+const REPO = "hao-portfolio-content";
+const BLOG_DIR = "blog";
 
 // --- Type Definitions ---
 export interface PostMetadata {
@@ -15,120 +17,114 @@ export interface PostMetadata {
     visibility: 'public' | 'private';
 }
 
-/**
- * Internal Cache: Persists only during production warm-start periods.
- * Prevents redundant File IO operations within the same server instance.
- */
-let postsCache: PostMetadata[] | null = null;
-
-/**
- * Regex to validate if a slug is safe and strictly follows the naming convention.
- * Rules:
- * - Only allows letters (a-z, A-Z), numbers (0-9), 
- * hyphens (-), and underscores (_).
- */
 const slugRegex = /^[a-zA-Z0-9-_]+$/;
 
 /**
- * Core Parser: Converts raw gray-matter data into a strict PostMetadata object.
+ * Standardizes raw gray-matter data into a strict PostMetadata object.
  */
 function parseMetadata(fileName: string, rawData: any): PostMetadata {
     return {
         slug: fileName.replace(/\.mdx$/, ''),
         title: rawData.title || 'Untitled',
-        // Standardize date format for consistent sorting
         date: rawData.date ? new Date(rawData.date).toISOString() : new Date().toISOString(),
         location: rawData.location || undefined,
         description: rawData.description || undefined,
-        // Handle tags as either string or array
         tags: Array.isArray(rawData.tags) ? rawData.tags : (rawData.tags ? [rawData.tags] : undefined),
         visibility: rawData.visibility === 'public' ? 'public' : 'private',
     };
 }
 
 /**
- * Retrieves all public blog post metadata with caching and performance optimization.
+ * Core Fetcher: Retrieves raw content from GitHub Private Repository.
+ * Uses 'vnd.github.v3.raw' to bypass Base64 encoding for better performance.
  */
-export function getBlogPosts(): PostMetadata[] {
-    // 1. Production cache check
-    if (postsCache && process.env.NODE_ENV === 'production') {
-        return postsCache;
+async function fetchFromGitHub(path: string): Promise<string | null> {
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${GITHUB_TOKEN}`,
+                Accept: "application/vnd.github.v3.raw",
+                "X-GitHub-Api-Version": "2022-11-28" // Explicitly pinning the API version
+            },
+            // Cache for 1 hour, allowing Next.js to serve static content while updating in background
+            next: { revalidate: 3600, tags: ['vault-content'] }
+        });
+
+        if (!response.ok) return null;
+        return response.text();
+    } catch (error) {
+        console.error(`Network error fetching ${path}:`, error);
+        return null;
     }
-
-    if (!fs.existsSync(BLOG_PATH)) return [];
-
-    const files = fs.readdirSync(BLOG_PATH);
-
-    /**
-     * 2. Optimize using flatMap instead of multiple map/filter calls.
-     * This reduces the creation of intermediate arrays and memory overhead.
-     */
-    const posts: PostMetadata[] = files.flatMap((fileName) => {
-        // 1. Filter by extension
-        if (!fileName.endsWith('.mdx')) return [];
-
-        try {
-            const fullPath = path.join(BLOG_PATH, fileName);
-            const fileContents = fs.readFileSync(fullPath, 'utf8');
-            const { data } = matter(fileContents);
-            const metadata = parseMetadata(fileName, data);
-
-            // 2. Filter by visibility
-            return metadata.visibility === 'public' ? [metadata] : [];
-        } catch (error) {
-            console.error(`Error parsing MDX file ${fileName}:`, error);
-            return []; // Skip this file on error
-        }
-    });
-
-    // 3. Sort by date descending
-    const sortedPosts = posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-    // 4. Update memory cache
-    postsCache = sortedPosts;
-    return sortedPosts;
 }
 
 /**
- * Fetches the most recent posts. 
- * Benefits from static pre-rendering as data is determined at build time.
+ * Retrieves all blog posts by scanning the repository directory.
+ * Filters by .mdx extension and 'public' visibility.
  */
-export function getLatestPosts(limit: number = 5): PostMetadata[] {
-    const allPosts = getBlogPosts();
-    return allPosts.slice(0, limit);
+export async function getBlogPosts(): Promise<PostMetadata[]> {
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${BLOG_DIR}`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${GITHUB_TOKEN}`,
+                "X-GitHub-Api-Version": "2022-11-28"
+            },
+            next: { revalidate: 3600, tags: ['vault-list'] }
+        });
+
+        if (!response.ok) return [];
+        const files = await response.json();
+
+        if (!Array.isArray(files)) return [];
+
+        // Concurrent fetching of all file contents to parse metadata
+        const posts = await Promise.all(
+            files
+                .filter(file => file.name.endsWith('.mdx'))
+                .map(async (file) => {
+                    const content = await fetchFromGitHub(`${BLOG_DIR}/${file.name}`);
+                    if (!content) return null;
+
+                    const { data } = matter(content);
+                    const metadata = parseMetadata(file.name, data);
+                    return metadata.visibility === 'public' ? metadata : null;
+                })
+        );
+
+        return (posts.filter(Boolean) as PostMetadata[])
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } catch (error) {
+        console.error("Error fetching blog post list:", error);
+        return [];
+    }
 }
 
 /**
- * Retrieves a post by its slug from the local vault.
- * Returns null if the slug is invalid or the file does not exist.
+ * Retrieves a single post's content and metadata by its slug.
  */
-export function getPostBySlug(slug: string) {
-    // 1. Fail-Fast: Reject malformed or suspicious slugs immediately
+export async function getPostBySlug(slug: string) {
     if (!slug || !slugRegex.test(slug)) {
-        console.warn(`Invalid slug blocked: ${JSON.stringify(slug)}`);
+        console.warn(`Blocked suspicious slug: ${slug}`);
         return null;
     }
 
-    const fullPath = path.join(BLOG_PATH, `${slug}.mdx`);
-
     try {
-        // 2. Only proceed to I/O if the slug passes validation
-        if (!fs.existsSync(fullPath)) {
-            return null;
-        }
-        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const fileContents = await fetchFromGitHub(`${BLOG_DIR}/${slug}.mdx`);
+        if (!fileContents) return null;
+
         const { data, content } = matter(fileContents);
         const metadata = parseMetadata(`${slug}.mdx`, data);
 
-        // Security check: Deny access if the post is marked as private
+        // Security: Ensure private posts are never leaked to the client
         if (metadata.visibility !== 'public') return null;
 
-        return {
-            metadata,
-            content,
-        };
+        return { metadata, content };
     } catch (e) {
-        console.error(`Error reading post: ${JSON.stringify(slug)}`, e);
+        console.error(`Error processing post ${slug}:`, e);
         return null;
     }
 }

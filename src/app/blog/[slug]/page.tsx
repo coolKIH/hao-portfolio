@@ -2,19 +2,12 @@ import { getPostBySlug, getBlogPosts } from "@/lib/vault";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from 'next';
-import { cache } from 'react'; // Import React cache
-
-// --- Memoize the data fetching ---
-// This ensures that generateMetadata and PostPage share the exact same execution context
-const getCachedPost = cache((slug: string) => {
-    return getPostBySlug(slug);
-});
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
 }): Promise<Metadata> {
     const { slug } = await params;
-    const post = getCachedPost(slug); // Use the cached version
+    const post = await getPostBySlug(slug);
 
     if (!post) {
         return { title: "Post Not Found" };
@@ -24,7 +17,7 @@ export async function generateMetadata({ params }: {
 }
 
 export async function generateStaticParams() {
-    const posts = getBlogPosts();
+    const posts = await getBlogPosts();
     return posts.map((post) => ({
         slug: post.slug,
     }));
@@ -34,7 +27,7 @@ export default async function PostPage({ params }: {
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params;
-    const post = getCachedPost(slug); // Use the same cached version
+    const post = await getPostBySlug(slug);
 
     if (!post) {
         notFound();
