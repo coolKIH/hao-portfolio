@@ -4,13 +4,16 @@ import matter from 'gray-matter';
 const GITHUB_TOKEN = process.env.VAULT_GITHUB_TOKEN;
 const OWNER = "coolKIH";
 const REPO = "hao-portfolio-content";
-const BLOG_DIR = "blog";
+
+// Path updates: matching the new structure in your vault
+const BLOG_DIR = "content/posts";
+const INDEX_PATH = "indices/posts.json";
 
 // --- Type Definitions ---
 export interface PostMetadata {
     slug: string;
     title: string;
-    date: string;
+    date: string; // ISO String stored in posts.json
     location?: string;
     description?: string;
     tags?: string[];
@@ -21,6 +24,7 @@ const slugRegex = /^[a-zA-Z0-9-_]+$/;
 
 /**
  * Standardizes raw gray-matter data into a strict PostMetadata object.
+ * Retained for individual post parsing in getPostBySlug.
  */
 function parseMetadata(fileName: string, rawData: any): PostMetadata {
     return {
@@ -46,7 +50,7 @@ async function fetchFromGitHub(path: string): Promise<string | null> {
             headers: {
                 Authorization: `Bearer ${GITHUB_TOKEN}`,
                 Accept: "application/vnd.github.v3.raw",
-                "X-GitHub-Api-Version": "2022-11-28" // Explicitly pinning the API version
+                "X-GitHub-Api-Version": "2022-11-28"
             },
             // Cache for 1 hour, allowing Next.js to serve static content while updating in background
             next: { revalidate: 3600, tags: ['vault-content'] }
@@ -61,50 +65,32 @@ async function fetchFromGitHub(path: string): Promise<string | null> {
 }
 
 /**
- * Retrieves all blog posts by scanning the repository directory.
- * Filters by .mdx extension and 'public' visibility.
+ * Retrieves all blog posts by fetching the pre-generated JSON index.
+ * This eliminates the N+1 request problem and pre-sorts data via GitHub Actions.
  */
 export async function getBlogPosts(): Promise<PostMetadata[]> {
-    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${BLOG_DIR}`;
-
     try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${GITHUB_TOKEN}`,
-                "X-GitHub-Api-Version": "2022-11-28"
-            },
-            next: { revalidate: 3600, tags: ['vault-list'] }
-        });
+        const indexContent = await fetchFromGitHub(INDEX_PATH);
 
-        if (!response.ok) return [];
-        const files = await response.json();
+        if (!indexContent) {
+            console.error("Failed to fetch posts index from vault.");
+            return [];
+        }
 
-        if (!Array.isArray(files)) return [];
+        const allPosts: PostMetadata[] = JSON.parse(indexContent);
 
-        // Concurrent fetching of all file contents to parse metadata
-        const posts = await Promise.all(
-            files
-                .filter(file => file.name.endsWith('.mdx'))
-                .map(async (file) => {
-                    const content = await fetchFromGitHub(`${BLOG_DIR}/${file.name}`);
-                    if (!content) return null;
-
-                    const { data } = matter(content);
-                    const metadata = parseMetadata(file.name, data);
-                    return metadata.visibility === 'public' ? metadata : null;
-                })
-        );
-
-        return (posts.filter(Boolean) as PostMetadata[])
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        // Security filter: ensure only public posts are returned.
+        // Sorting is skipped here as it is handled by the generation script.
+        return allPosts.filter(post => post.visibility === 'public');
     } catch (error) {
-        console.error("Error fetching blog post list:", error);
+        console.error("Error fetching blog post list index:", error);
         return [];
     }
 }
 
 /**
  * Retrieves a single post's content and metadata by its slug.
+ * Continues to fetch the specific .mdx file for full content rendering.
  */
 export async function getPostBySlug(slug: string) {
     if (!slug || !slugRegex.test(slug)) {
