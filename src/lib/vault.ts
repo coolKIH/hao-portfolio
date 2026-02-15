@@ -52,8 +52,9 @@ async function fetchFromGitHub(path: string): Promise<string | null> {
                 Accept: "application/vnd.github.v3.raw",
                 "X-GitHub-Api-Version": "2022-11-28"
             },
-            // Cache for 1 hour, allowing Next.js to serve static content while updating in background
-            next: { revalidate: 3600, tags: ['vault-content'] }
+            // Double-check: Instant update via Deploy Hook, 
+            // plus 24-hour auto-refresh safety net.
+            next: { revalidate: 86400, tags: ['vault-content'] }
         });
 
         if (!response.ok) return null;
