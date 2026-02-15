@@ -43,7 +43,12 @@ function parseMetadata(fileName: string, rawData: any): PostMetadata {
  * Uses 'vnd.github.v3.raw' to bypass Base64 encoding for better performance.
  */
 async function fetchFromGitHub(path: string): Promise<string | null> {
-    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
+    const cacheBuster = process.env.VERCEL_DEPLOYMENT_ID
+        ? `?t=${process.env.VERCEL_DEPLOYMENT_ID}`
+        : `?t=${Date.now()}`;
+
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}` + cacheBuster;
+    console.log('Fetching from GitHub URL:', url);
 
     try {
         const response = await fetch(url, {
