@@ -43,7 +43,7 @@ export default function RootLayout({
           <Container>{children}</Container>
         </main>
 
-        <footer className="py-12 text-center text-xs tracking-widest text-zinc-400 dark:text-zinc-500 uppercase">
+        <footer className="py-12 text-center text-xs tracking-widest text-muted-foreground uppercase">
           © {new Date().getFullYear()} Hao
         </footer>
 

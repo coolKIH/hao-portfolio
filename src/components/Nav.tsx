@@ -29,7 +29,7 @@ export function Nav() {
     ];
 
     return (
-        <nav className="flex gap-8 text-sm text-zinc-600 dark:text-zinc-400">
+        <nav className="flex gap-8 text-sm text-muted-foreground">
             {links.map((link) => {
                 const isActive = link.matchRule.test(pathname);
 
@@ -38,8 +38,8 @@ export function Nav() {
                     href={link.href}
                     className={
                         isActive
-                            ? "font-semibold text-black dark:text-zinc-50 transition-colors"
-                            : "hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
+                            ? "font-semibold text-foreground transition-colors"
+                            : "hover:text-foreground transition-colors"
                     }
                 >
                     {link.label}

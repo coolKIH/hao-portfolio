@@ -28,7 +28,7 @@ export default function Projects() {
 
     return (
         <div className="space-y-4">
-            <h1 className="text-3xl font-semibold text-black dark:text-zinc-50">我的作品</h1>
+            <h1 className="text-3xl font-semibold text-foreground">我的作品</h1>
             <div className="grid gap-4 md:grid-cols-2">
                 {projects.map((p) => (
                     <ProjectCard

@@ -52,9 +52,9 @@ body {
   @apply font-sans;
 }
 
-@utility prose-zinc {
-  --tw-prose-body: var(--color-zinc-800);
-  --tw-prose-invert-body: var(--color-zinc-200);
+@utility prose-stone {
+  --tw-prose-body: var(--color-stone-800);
+  --tw-prose-invert-body: var(--color-stone-200);
 }
 
 :root {

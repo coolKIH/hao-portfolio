@@ -37,31 +37,31 @@ export default async function PostPage({ params }: {
     return (
         <div>
             <header className="mb-10">
-                <h1 className="text-3xl font-bold text-black dark:text-zinc-50 mb-2">
+                <h1 className="text-3xl font-bold text-foreground mb-2">
                     {post.metadata.title}
                 </h1>
-                <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+                <div className="flex items-center gap-2 text-muted-foreground">
                     <ZonedTime dateStr={post.metadata.date} mode="datetime"></ZonedTime>
                     {post.metadata.location && (
                         <>
-                            <span className="w-1 h-1 rounded-full bg-zinc-400" />
+                            <span className="w-1 h-1 rounded-full bg-muted-foreground/80" />
                             <span>{post.metadata.location}</span>
                         </>
                     )}
                 </div>
             </header>
-            <article className="prose dark:prose-invert prose-zinc max-w-none">
+            <article className="prose dark:prose-invert prose-stone max-w-none">
                 <MDXRemote source={post.content} />
             </article>
             {post.metadata.tags && (
                 <>
-                    <hr className="w-full border-zinc-100 dark:border-zinc-800 my-10" />
+                    <hr className="w-full border-stone-100 dark:border-stone-800 my-10" />
                     <div className="flex gap-2 mt-1">
                         {post.metadata.tags.map((tag: string) => (
                             <span
                                 key={tag}
-                                className="px-2 py-0.5 rounded-sm bg-zinc-100 dark:bg-zinc-900 
-                                       text-zinc-500 dark:text-zinc-400 text-sm font-medium"
+                                className="px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-900 
+                                       text-muted-foreground text-sm font-medium"
                             >
                                 <span className="opacity-50 mr-0.5">#</span>
                                 {tag}
