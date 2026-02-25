@@ -15,7 +15,7 @@ export default function About() {
                 我是 Hao，一名偏前端的全栈开发者，喜欢学习新技术，创造激动人心的产品。
             </p>
             <section className="mt-16">
-                <h2 className="text-sm font-semibold uppercase text-muted-foreground mb-3">
+                <h2 className="font-semibold uppercase text-muted-foreground mb-3">
                     联系方式
                 </h2>
                 <address className="not-italic space-y-3 text-lg text-foreground">

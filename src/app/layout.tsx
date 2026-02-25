@@ -4,6 +4,7 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Container } from "@/components/Container";
 import { Analytics } from "@vercel/analytics/next"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,25 +30,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full">
+    <html lang="zh-CN" className="h-full" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
       >
-        <header className="py-4">
-          <Container>
-            <Nav />
-          </Container>
-        </header>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
 
-        <main className="flex-1 py-12">
-          <Container>{children}</Container>
-        </main>
+          <header className="py-4">
+            <Container>
+              <Nav />
+            </Container>
+          </header>
 
-        <footer className="py-12 text-center text-xs tracking-widest text-muted-foreground uppercase">
-          © {new Date().getFullYear()} Hao
-        </footer>
+          <main className="flex-1 py-12">
+            <Container>{children}</Container>
+          </main>
 
-        <Analytics />
+          <footer className="py-12 text-center text-xs tracking-widest text-muted-foreground uppercase">
+            © {new Date().getFullYear()} Hao
+          </footer>
+
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
