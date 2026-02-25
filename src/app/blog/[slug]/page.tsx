@@ -60,10 +60,13 @@ export default async function PostPage({ params }: {
                         {post.metadata.tags.map((tag: string) => (
                             <span
                                 key={tag}
-                                className="px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-900 
-                                       text-muted-foreground text-sm font-medium"
+                                className="px-2 py-0.5 rounded-sm 
+                                            bg-brand/5 dark:bg-brand/10 
+                                            text-muted-foreground text-sm font-medium
+                                            border border-brand/5 dark:border-brand/20"
                             >
-                                <span className="opacity-50 mr-0.5">#</span>
+                                {/* Use brand color for the '#' to make it an anchor */}
+                                <span className="text-brand/50 mr-0.5 font-bold">#</span>
                                 {tag}
                             </span>
                         ))}

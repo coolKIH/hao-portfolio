@@ -16,10 +16,10 @@ export default function Home() {
       </section>
 
       <section>
-        <h2 className="text-lg font-medium text-foreground">
+        <h2 className="text-lg font-medium text-foreground mb-2">
           我关注的方向
         </h2>
-        <ul className="list-disc pl-5 text-foreground">
+        <ul className="list-disc pl-5 text-foreground space-y-1">
           <li>前端工程与 Web 产品体验</li>
           <li>React / Next.js / TypeScript</li>
           <li>可维护、可演进的代码结构</li>
@@ -27,7 +27,7 @@ export default function Home() {
       </section>
 
       <section>
-        <h2 className="text-lg font-medium text-foreground">
+        <h2 className="text-lg font-medium text-foreground mb-2">
           当前在做什么
         </h2>
         <p className="text-foreground">

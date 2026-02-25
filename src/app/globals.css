@@ -46,10 +46,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-}
 
-body {
-  @apply font-sans;
+  --color-brand: var(--brand-brown);
 }
 
 @utility prose-stone {
@@ -90,6 +88,13 @@ body {
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
+
+  /* Brand Color: Earthy Brown (#441) */
+  --brand-brown: oklch(0.28 0.02 50); /* #441 converted to OKLCH for consistency */
+
+  /* Atmospheric Layer: Light Mode - Warm & Paper-like */
+  --sky-start: oklch(0.97 0.005 60);  /* Soft cream stone */
+  --sky-end: oklch(0.99 0.002 50);    /* Lighter stone white */
 }
 
 .dark {
@@ -124,6 +129,10 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
+
+  /* Atmospheric Layer: Dark Mode - Charcoal & Ink */
+  --sky-start: oklch(0.25 0.01 50);   /* Muted charcoal stone */
+  --sky-end: oklch(0.14 0.01 50);    /* Deepest stone ground */
 }
 
 @layer base {
@@ -131,6 +140,18 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply font-sans bg-background text-foreground;
+
+    /* Apply the atmospheric gradient */
+    background: linear-gradient(to bottom, var(--sky-start), var(--sky-end));
+    
+    /* Fix background to create a "stationary sky" effect while scrolling content */
+    background-attachment: fixed;
+    
+    /* Ensure the gradient covers at least the full viewport height */
+    min-height: 100vh;
+    
+    /* Smooth transition for theme switching */
+    transition: background 0.5s ease;
   }
 }
