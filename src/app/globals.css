@@ -130,6 +130,12 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
 
+  /* * Dark Mode Brand Color: 
+     * We bump the Lightness from 0.28 to 0.85.
+     * We keep Chroma (0.02) and Hue (50) for brand consistency.
+     */
+  --brand-brown: oklch(0.95 0.02 50);
+
   /* Atmospheric Layer: Dark Mode - Charcoal & Ink */
   --sky-start: oklch(0.25 0.01 50);   /* Muted charcoal stone */
   --sky-end: oklch(0.14 0.01 50);    /* Deepest stone ground */
@@ -147,9 +153,6 @@
     
     /* Fix background to create a "stationary sky" effect while scrolling content */
     background-attachment: fixed;
-    
-    /* Ensure the gradient covers at least the full viewport height */
-    min-height: 100vh;
     
     /* Smooth transition for theme switching */
     transition: background 0.5s ease;
