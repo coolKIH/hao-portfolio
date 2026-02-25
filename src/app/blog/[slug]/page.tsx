@@ -55,18 +55,18 @@ export default async function PostPage({ params }: {
             </article>
             {post.metadata.tags && (
                 <>
-                    <hr className="w-full border-stone-100 dark:border-stone-800 my-10" />
-                    <div className="flex gap-2 mt-1">
+                    <hr className="w-full border-stone-300 dark:border-stone-600 my-10" />
+                    <div className="flex gap-3 mt-1">
                         {post.metadata.tags.map((tag: string) => (
                             <span
                                 key={tag}
                                 className="px-2 py-0.5 rounded-sm 
                                             bg-brand/5 dark:bg-brand/10 
                                             text-muted-foreground text-sm font-medium
-                                            border border-brand/5 dark:border-brand/20"
+                                            border border-brand/5 dark:border-brand/10"
                             >
                                 {/* Use brand color for the '#' to make it an anchor */}
-                                <span className="text-brand/50 mr-0.5 font-bold">#</span>
+                                <span className="text-brand/50 mr-1 font-bold">#</span>
                                 {tag}
                             </span>
                         ))}
