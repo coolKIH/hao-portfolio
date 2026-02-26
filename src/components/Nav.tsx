@@ -28,7 +28,7 @@ export function Nav() {
                         className={cn(
                             /* Base styles from shadcn, but we reset background hover effects */
                             buttonVariants({ variant: "ghost", size: "sm" }),
-                            "relative px-0 py-1 h-auto hover:bg-transparent transition-all duration-300",
+                            "relative px-0 py-1 h-auto hover:bg-transparent dark:hover:bg-transparent transition-all duration-300",
                             /* Typography refinement: 
                                1. tracking-widest: adds the "breath" between letters.
                                2. text-xs: smaller text often looks more elegant for nav.
