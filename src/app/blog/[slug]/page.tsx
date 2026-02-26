@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from 'next';
 import ZonedTime from "@/components/ZonedTime";
+import { cn } from "@/lib/utils";
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
@@ -50,7 +51,23 @@ export default async function PostPage({ params }: {
                     )}
                 </div>
             </header>
-            <article className="prose dark:prose-invert prose-stone max-w-none">
+            <article className={cn(
+                /* Base Typography Setup */
+                "prose dark:prose-invert prose-stone max-w-none",
+
+                /* Remove default typography backticks from all code elements */
+                "[&_code::before]:content-none [&_code::after]:content-none",
+
+                /* Style inline code ONLY (excludes code blocks inside <pre>) */
+                /* Light mode background */
+                "[&_:not(pre)>code]:bg-stone-200/50",
+                /* Dark mode: Semi-transparent white 'glass' effect */
+                "dark:[&_:not(pre)>code]:bg-white/10",
+
+                /* Fine-tune inline code appearance */
+                "[&_:not(pre)>code]:rounded-md [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5",
+                "dark:[&_:not(pre)>code]:text-white/90 [&_:not(pre)>code]:font-medium"
+            )}>
                 <MDXRemote source={post.content} />
             </article>
             {post.metadata.tags && (

@@ -53,6 +53,7 @@
 @utility prose-stone {
   --tw-prose-body: var(--color-stone-800);
   --tw-prose-invert-body: var(--color-stone-200);
+  --tw-prose-invert-pre-bg: oklch(0.28 0.01 50 / 0.5);
 }
 
 :root {

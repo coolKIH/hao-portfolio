@@ -1,0 +1,128 @@
+写在睡觉之前。
+
+今天晚饭之前，我骑车到了镇上，想要看看春节期间的街道是怎样的光景？
+
+会不会偶然遇到曾经认识的同学或者朋友？ 对此我有点害怕也有点期待。
+
+所以我出发了……经过天桥，我看到路上还是不停地有大货车从身边呼啸而过。桥下不远处，是一大片绿色的田地，高大的甘蔗林格外耀眼。到达天桥顶端的时候，感觉好像世界在自己身边，空气格外清新。身边仍然不停有大车闪过，偶然间污浊了空气。
+
+穿过熟悉的街道，路上似乎比往日要安静了一些，许多店铺也在休业、享受假期。有的理发店、五金商店、电器行仍然开张，其中有一家理发店向外透出强烈的冷气。
+
+跟以前相比，街道的结构完全是一样的，也没看到什么崭新的建筑，但是确实没有那种久违的熟悉感。我居然看不到一张熟悉的脸孔。真的就像是「最熟悉的陌生人」。
+
+现在街上似乎多了很多买甘蔗的，现在的甘蔗感觉很长，我不太确定是否从以前开始就这么长。街上的人似乎就是完全属于这个地方的，可是他们都在忙自己的事，而我就像是一个时光旅行者，骑着棕黄色的自行车，穿梭在往日曾经熟悉的大街上，看着一张张陌生的脸孔。
+
+我记得那家水果店，从前经常光顾，看着店主的孩子从小孩子变成大人，现在早已消失不见。
+
+我记得那家商店，门口摆满了各种玩具（例如四驱车、陀螺、溜溜球），现在想再看最新的玩具，却也找不到。
+
+我又来到曾经的小学门口，大门敞开着，里面传来有人聊天的声音。我前阵子去过，里面让自己怀念的东西似乎都已经再没有踪迹，因此这次我就不冒险进去了——虽然也许会碰到自己曾经的老师，但是从概率上来说是不大可能……
+
+是的，过去的老师，有那么多精彩的老师，当时我觉得教书似乎就是他们的生命，也是他们让我从小对于教育有一种执念，虽然我并没有学习和从事教育行业。特别是曾经的小学四年级的语文老师，他现在怎么样了呢？曾经在天桥跟他相向而行，因为速度太快而且并不是我自己在操纵车辆，我只记得那个老师回过头来看。为什么当我这次特意去寻找，却再也找不到了？
+
+我不知道如果遇到了之后，他会是一个怎样的人。会不会变成一个死气沉沉的无聊迂腐之人呢，还是仍然朝气蓬勃、老当益壮？可是我是有点在盼望着遇见。
+
+我继续骑行，目光所及我观察许多路人，好像有一个阿姨有点面善，但是不记得是谁。她当然也没有反应。
+
+我仍然希望能够遇到以前的同学，哪怕只是看看就好。
+
+我走到以前住过的一个地方，房屋结构已经产生巨大的改变，附近都变成了烧烤店、早餐店，而在两栋建筑之间的过道，通向一大片菜地。从前，这个过道应该宽大许多，而且好像大家随便都可以下去玩。这次我靠近这条过道，变得狭窄，以前的泥地变成了水泥，我看到过道尽头的下方是一个鸡窝，应该是附近人家养的鸡。我看了看远方，能够看到火力发电厂的巨塔，这是以前没有的“风景”。
+
+这片过道似乎已经是完全靠近房屋的私人领地了，我赶紧撤退，启程回家。
+
+经过一座房屋，应该是一个小学同学的家，门口敞开， 里面灰暗无光，似乎看到一个妇女坐着。
+
+继续骑行，旁边的田地还不是丰收的季节，往日里忙着种地的人家在这时一定也在庆祝新年。
+
+回到家，S 问我去了哪里？我平淡地说去了镇上。
+
+可是我还会再去。
+
+---
+
+We often hear that AI will eventually automate the "boring parts" of frontend development. However, my recent struggle with the **Tailwind CSS v4 Typography** plugin proved that there is still a significant gap between an AI's "probabilistic suggestion" and a developer's "logical precision."
+
+The problem seemed simple: the default text color in my `MDXRemote` rendered content was too faint—lacking the legibility required for a professional portfolio. But the solution was anything but.
+
+Here's how I originally render the post with `MDXRemote` component:
+
+Originally, my setup for rendering posts with the `MDXRemote` component was straightforward, leveraging the official `@tailwindcss/typography` plugin:
+
+```tsx
+<article className="prose dark:prose-invert prose-zinc max-w-none">
+    <MDXRemote source={content} />
+</article>
+```
+
+While the layout was solid, the actual reading experience was lackluster. The body text felt visually "thin" — the contrast was too low for comfortable long-form reading. Upon inspecting the browser DevTools, I identified the root of the styling protocol: the plugin relies on two specific CSS variables to handle body text colors across themes:
+
+```css
+/* Default mode color mapping */
+.prose {
+    color: var(--tw-prose-body);
+}
+
+/* Inverted color mapping for dark mode */
+.prose-invert {
+    color: var(--tw-prose-invert-body);
+}
+```
+
+It seemed like a trivial problem to solve. Before diving into the official documentation, I turned to **Gemini** and **Grok** for what I expected to be a "quick and smart" solution.
+
+---
+
+### 1. The Hallucination of Legacy Logic
+
+When I prompted **Gemini** and **Grok** for a fix, both fell into the same trap: they offered solutions based on legacy architectures. For a few examples:
+
+* **The "Dirty" Overlay:** Suggestions to simply wrap components in a generic `text-zinc-300`. This is a blunt instrument—it ignores the nuanced specificity of the Typography plugin (headers, lists, blockquotes) and fails to solve the root cause.* **The Theme Override Fallacy:** AI-generated `@theme` blocks that worked in v3 but are syntactically incompatible with the internal variable mapping of **Tailwind v4**.
+* **The Inline Style Override:** One suggestion was to inject the CSS variables directly into the component's `style` prop. While technically functional, this approach is the definition of "leaky logic"—it bypasses the utility-first philosophy of Tailwind and litters the JSX with raw hex codes or variable mappings that should live in the CSS layer.
+* **The Config Bloat:** Another common recommendation was to revert to the `tailwind.config.js` and attempt an `extend` override. In Tailwind v4’s CSS-first engine, clinging to the JavaScript config for simple utility refinements feels like an architectural regression. It adds unnecessary weight to the configuration layer for something that should be a native CSS declaration.
+
+This highlighted a fundamental truth: **AI is a mirror of the past.** When technology moves as fast as a v4 release, AI logic becomes a "legacy bridge" leading to nowhere. It cannot "reason" through a new documentation set; it can only guess based on what used to be true. 
+
+Even when I explicitly prompted Gemini to prioritize official solutions for the latest version of Tailwind CSS, it failed to identify the correct architectural shift. It provided answers that were "factually" correct for the internet of 2024, but practically obsolete for the development environment of 2026.
+
+### 2. The Solution: Leveraging the `@utility` Layer
+
+The breakthrough didn't come from a better prompt, but from a deeper dive into the CSS-first configuration of Tailwind v4. The goal was to override the typography internal variables without introducing "hacky" global styles.
+
+The elegant solution was to define a custom `@utility` that directly targets the **prose** internal variables. This ensures the styles are scoped, atomic, and respect both light and dark modes:
+
+```css
+@utility prose-zinc {
+  /* High-fidelity color overrides for the Zinc palette */
+  --tw-prose-body: var(--color-zinc-800);
+  --tw-prose-invert-body: var(--color-zinc-200);
+}
+```
+
+By manually mapping `--tw-prose-body` to `zinc-800` and its inverted counterpart to `zinc-200`, I achieved a level of visual **"granularity"** that the AI’s generic suggestions simply couldn't touch.
+
+#### Why this approach is superior:
+
+1.  **Alignment with v4 Philosophy**: Tailwind v4 moves toward a CSS-first configuration. Using `@utility` allows you to define styles in native CSS while keeping them accessible as standard Tailwind classes.
+2.  **Decoupling Concerns**: By avoiding inline styles (the `style={{...}}` hack), I separated the business logic from the design system. The color depth can be updated in one CSS file without touching a single JSX component.
+3.  **Surgical Precision**: The Typography plugin uses a complex hierarchy of internal variables. Overriding `--tw-prose-body` fixes the legibility of the main text without breaking the balanced hierarchy of headings, links, or code blocks.
+4.  **Seamless Inversion**: Defining `--tw-prose-invert-body` within the same utility creates a robust "Dark Mode" contract that works predictably with the `dark:prose-invert` class.
+
+#### Choosing `.prose-zinc` over `.prose`
+
+While it is possible to apply these overrides directly to the generic `.prose` class, targeting `.prose-zinc` is a more sophisticated architectural choice. 
+
+In the Tailwind ecosystem, `.prose` handles **structure** (spacing, line-height), while `.prose-[color]` handles **theming**. By modifying `.prose-zinc`, I respected this separation of concerns. Globalizing the fix under `.prose` would lock every typography element on the site into that specific Zinc color, whereas my approach allows for future flexibility—such as using `prose-blue` in a different section without Zinc overrides "leaking" into it.
+
+---
+
+### 3. Conclusion: The Role of the Developer in 2026
+
+This experience was a reminder that the most critical skill for a developer today isn't "prompt engineering"—it's **technical discernment.**
+
+AI can generate code, but it cannot yet appreciate the "dirty vs. clean" distinction of an architectural choice. It can provide a solution, but it cannot guarantee that the solution respects the integrity of a new framework. Until AI can truly understand a documentation's *intent* rather than just its *syntax*, the developer remains the final arbiter of what is "correct."
+
+---
+
+> **Key Takeaway:** If the AI feels "hacky," it probably is. Trust your architectural intuition over a generated response.
+
+*This post was created & polished by Gemini, prompted & edited by Hao.*
