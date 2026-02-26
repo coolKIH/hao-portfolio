@@ -138,8 +138,8 @@
   --brand-brown: oklch(0.95 0.02 50);
 
   /* Atmospheric Layer: Dark Mode - Charcoal & Ink */
-  --sky-start: oklch(0.25 0.01 50);   /* Muted charcoal stone */
-  --sky-end: oklch(0.14 0.01 50);    /* Deepest stone ground */
+  --sky-start: oklch(0.2 0.01 50);   /* Muted charcoal stone */
+  --sky-end: oklch(0.15 0.01 50);    /* Deepest stone ground */
 }
 
 @layer base {
@@ -147,7 +147,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply font-sans bg-background text-foreground;
+    @apply font-sans text-foreground;
 
     /* Apply the atmospheric gradient */
     background: linear-gradient(to bottom, var(--sky-start), var(--sky-end));
