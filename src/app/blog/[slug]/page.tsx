@@ -73,7 +73,7 @@ export default async function PostPage({ params }: {
             {post.metadata.tags && (
                 <>
                     <hr className="w-full border-stone-300 dark:border-stone-600 my-10" />
-                    <div className="flex gap-3 mt-1">
+                    <div className="flex gap-3 mt-1 flex-wrap">
                         {post.metadata.tags.map((tag: string) => (
                             <span
                                 key={tag}
