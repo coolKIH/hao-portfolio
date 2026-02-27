@@ -150,12 +150,30 @@
     @apply font-sans text-foreground;
 
     /* Apply the atmospheric gradient */
-    background: linear-gradient(to bottom in oklch, var(--sky-start), var(--sky-end));
-    
-    /* Fix background to create a "stationary sky" effect while scrolling content */
-    background-attachment: fixed;
+    background: linear-gradient(to bottom in oklch, var(--sky-start), var(--sky-end)) fixed;
     
     /* Smooth transition for theme switching */
     transition: background 0.5s ease;
+  }
+}
+
+@theme {
+  --animate-float: float 10s ease-in-out infinite;
+  @keyframes float {
+   0%, 100% { transform: rotate(0deg) translate(0, 0); }
+    20% { transform: rotate(2deg) translate(-1px, -7px); }
+    40% { transform: rotate(3deg) translate(-2px, -12px); }
+    50% { transform: rotate(1deg) translate(-1px, -9px); }
+    60% { transform: rotate(3deg) translate(-2px, -13px); }
+    80% { transform: rotate(1deg) translate(-1px, -5px); }
+  };
+}
+
+@layer utilities {
+  .animate-paused {
+    animation-play-state: paused;
+  }
+  .hover\:animate-running:hover {
+    animation-play-state: running;
   }
 }
