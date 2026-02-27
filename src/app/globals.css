@@ -138,8 +138,8 @@
   --brand-brown: oklch(0.95 0.02 50);
 
   /* Atmospheric Layer: Dark Mode - Charcoal & Ink */
-  --sky-start: oklch(0.2 0.01 50);   /* Muted charcoal stone */
-  --sky-end: oklch(0.15 0.01 50);    /* Deepest stone ground */
+  --sky-start: oklch(0.22 0.01 50);   /* Muted charcoal stone */
+  --sky-end: oklch(0.18 0.01 50);    /* Deepest stone ground */
 }
 
 @layer base {
@@ -150,7 +150,7 @@
     @apply font-sans text-foreground;
 
     /* Apply the atmospheric gradient */
-    background: linear-gradient(to bottom, var(--sky-start), var(--sky-end));
+    background: linear-gradient(to bottom in oklch, var(--sky-start), var(--sky-end));
     
     /* Fix background to create a "stationary sky" effect while scrolling content */
     background-attachment: fixed;
