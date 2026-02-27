@@ -17,7 +17,7 @@ export function Nav() {
     ];
 
     return (
-        <nav className="flex items-center gap-8">
+        <nav className="flex items-center gap-8 justify-center sm:justify-start">
             {links.map((link) => {
                 const isActive = link.matchRule.test(pathname);
 
