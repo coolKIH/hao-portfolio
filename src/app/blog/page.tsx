@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/vault";
 import type { Metadata } from 'next'
-import ZonedTime from "@/components/ZonedTime";
+import ZonedTime from "@/components/zoned-time";
 
 const POSTS_PER_PAGE = 6;
 

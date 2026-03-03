@@ -10,16 +10,17 @@ A personal portfolio website built with **Next.js** and **Tailwind CSS**. This r
 
 ## 🏗 Architecture
 
-The project is structured to separate logic from content:
+The project follows a simple, monolithic structure:
 
-* **Logic**: This repository handles UI components, routing, and styling.
-* **Content Management**: Content is managed via a Git submodule (private), which contains MDX files for posts and other data. This allows the core engine and the raw data to be maintained independently.
+* **UI Components**: React components with Tailwind CSS styling
+* **Content Management**: Blog posts are stored as MDX files in `/content/posts` directory
+* **Routing**: Next.js App Router for page navigation and dynamic routes
 
 ## 🚀 Getting Started
 
 1. **Clone the repository**:
     ```bash
-    git clone --recursive <this repo>
+    git clone <this repo>
     ```
 
 2. **Install dependencies**:
@@ -31,6 +32,10 @@ The project is structured to separate logic from content:
     ```bash
     pnpm run dev
     ```
+
+4. **Add blog posts**:
+    - Create MDX files in `/content/posts` directory
+    - Include frontmatter with `title`, `date`, `description`, `location`, and `tags`
 
 ## 📝 Ongoing Updates
 The project is still in its early stages. Current focus areas include:

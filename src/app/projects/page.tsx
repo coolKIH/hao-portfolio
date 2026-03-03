@@ -1,4 +1,4 @@
-import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectCard } from "@/components/project-card";
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

@@ -2,7 +2,7 @@ import { getPostBySlug, getBlogPosts } from "@/lib/vault";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from 'next';
-import ZonedTime from "@/components/ZonedTime";
+import ZonedTime from "@/components/zoned-time";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({ params }: {
