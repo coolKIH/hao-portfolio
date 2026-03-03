@@ -4,6 +4,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from 'next';
 import ZonedTime from "@/components/zoned-time";
 import { cn } from "@/lib/utils";
+import { mdxComponents } from "@/lib/mdx-components";
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
@@ -68,7 +69,7 @@ export default async function PostPage({ params }: {
                 "[&_:not(pre)>code]:rounded-md [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5",
                 "dark:[&_:not(pre)>code]:text-white/90 [&_:not(pre)>code]:font-medium"
             )}>
-                <MDXRemote source={post.content} />
+                <MDXRemote source={post.content} components={mdxComponents} />
             </article>
             {post.metadata.tags && (
                 <>
