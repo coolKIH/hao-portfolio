@@ -1,0 +1,136 @@
+---
+title: "Build Log: Simplifying the System, Clarifying the Intent"
+date: "2026-03-03 21:30:14 +0800"
+location: "书桌"
+tags: ["build log", "simplification", "portfolio"]
+description: "A reflection on simplifying my portfolio architecture — removing premature abstractions, improving performance, and choosing clarity over hypothetical complexity."
+---
+
+Today’s work wasn’t about adding new features.
+
+It was about removing unnecessary complexity.
+
+Over time, my portfolio/blog architecture had quietly accumulated abstractions that were technically interesting — but not truly aligned with what I needed. Today I stepped back, simplified the system, and in doing so, clarified the purpose of the project itself.
+
+---
+
+## 1. From Private Vault + API to Single-Repo Simplicity
+
+Previously, my blog content lived in a separate private repository. The portfolio fetched posts dynamically via the GitHub API.
+
+At first, this felt elegant:
+
+* Separation of concerns
+* Future-ready for private posts
+* Flexible content management
+
+But in reality, it introduced:
+
+* Unnecessary network requests
+* More complex data flow
+* Additional failure points
+* Architectural weight for a feature I may never need
+
+Today, I reintegrated all blog content directly into the portfolio repository.
+
+The result:
+
+* Simpler data flow
+* Better rendering performance
+* Fewer moving parts
+* A clearer mental model
+
+More importantly, it forced me to confront a question:
+
+> Am I building for real needs, or hypothetical future scenarios?
+
+For now, I only need to publish thoughtful, public writing. That’s it.
+Everything else was premature abstraction.
+
+---
+
+## 2. Pagination: From Query Strings to Path-Based Routing
+
+The blog pagination previously relied on search queries like:
+
+```
+?page=2
+```
+
+I refactored this to use path-based routing instead:
+
+```
+/blog/page/2
+```
+
+With Next.js pre-rendering, this brings several advantages:
+
+* Static generation per page
+* Faster load times
+* Improved SEO
+* Cleaner URL structure
+
+This small structural change makes the blog feel more deliberate and production-ready.
+
+It’s subtle, but meaningful.
+
+---
+
+## 3. A Standardized MDX `<Image />` Component
+
+I introduced a custom `<Image />` component for MDX posts, built on top of `next/image`.
+
+This allows:
+
+* Explicit width and height to prevent layout shifts
+* Automatic optimization
+* Optional captions for better contextual storytelling
+
+Rather than sprinkling raw `<img>` tags throughout posts, this enforces a consistent content primitive — making the blog system more maintainable and visually stable over time.
+
+---
+
+## 4. What Today Was Really About
+
+Technically, I:
+
+* Simplified architecture
+* Improved performance
+* Enhanced SEO
+* Stabilized rendering
+
+But philosophically, today was about restraint.
+
+There’s a temptation, especially as a developer, to design for scale before scale exists.
+To build optionality before clarity.
+
+Today I chose clarity.
+
+The portfolio exists to:
+
+* Share thoughtful observations
+* Document technical growth
+* Reflect evolving ideas
+
+Not to demonstrate architectural over-engineering.
+
+---
+
+## 5. A Small Principle Going Forward
+
+Build for:
+
+* Current intent
+* Real constraints
+* Present clarity
+
+Not imagined complexity.
+
+This iteration feels lighter.
+And that lightness feels right.
+
+More soon.
+
+---
+
+*Drafted with AI assistance. Final edits and direction by Hao.*
