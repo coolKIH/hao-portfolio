@@ -1,44 +1,81 @@
 # hao-portfolio
 
-A personal portfolio website built with **Next.js** and **Tailwind CSS**. This repository serves as the core rendering engine and UI layer for the site.
+Hao's personal portfolio website — a Next.js (App Router) + MDX project.
 
-## 🛠 Tech Stack
+## Overview
+This repository contains the source of a personal website that presents a blog and project pages. The site uses Next.js (App Router), MDX for content, and Tailwind/PostCSS for styling.
 
-* **Framework**: Next.js (App Router)
-* **Styling**: Tailwind CSS
-* **Content Processing**: MDX
+## Key Features
+- MDX-based blog and project content under the `content/` directory
+- App Router pages and layouts in `src/app`
+- Reusable UI components in `src/components`
+- Simple static/media hosting under `public/media`
+- Vercel-friendly configuration and analytics included in `package.json`
+- UI primitives and component patterns via shadcn (`shadcn/ui`)
 
-## 🏗 Architecture
+## Tech stack
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS, PostCSS
+- Content: MDX files parsed at build/runtime
+- UI primitives: shadcn (shadcn/ui)
+- Languages: TypeScript, React
 
-The project follows a simple, monolithic structure:
+## Repository layout (short)
+- [src/app](src/app) — Next.js App Router pages and layouts
+- [src/components](src/components) — UI components (nav, blog-list, project-card, etc.)
+- [src/lib](src/lib) — MDX components and utility functions
+- [content](content) — MDX content (posts, projects)
+- [public/media](public/media) — static assets used by posts/pages
+- [package.json](package.json) — scripts and dependency manifest
 
-* **UI Components**: React components with Tailwind CSS styling
-* **Content Management**: Blog posts are stored as MDX files in `/content/posts` directory
-* **Routing**: Next.js App Router for page navigation and dynamic routes
+## Local development
+1. Install dependencies:
 
-## 🚀 Getting Started
+```bash
+pnpm install
+```
 
-1. **Clone the repository**:
-    ```bash
-    git clone <this repo>
-    ```
+2. Start development server (default: http://localhost:3000):
 
-2. **Install dependencies**:
-    ```bash
-    pnpm install
-    ```
+```bash
+pnpm dev
+```
 
-3. **Run the development server**:
-    ```bash
-    pnpm run dev
-    ```
+3. Build and run production:
 
-4. **Add blog posts**:
-    - Create MDX files in `/content/posts` directory
-    - Include frontmatter with `title`, `date`, `description`, `location`, and `tags`
+```bash
+pnpm build
+pnpm start
+```
 
-## 📝 Ongoing Updates
-The project is still in its early stages. Current focus areas include:
-* **UI/UX Development**: Implementing the core layout and styling system.
-* **Content Integration**: Improving Blog page and setting up Projects page.
-* **Information Architecture**: There is still placeholder information and they will be updated when content becomes available.
+4. Linting:
+
+```bash
+pnpm lint
+```
+
+## Adding content
+- Add blog posts as MDX files under `content/posts/`.
+- Recommended frontmatter fields: `title`, `date`, `description`, `tags` (and `location` if used).
+- For projects, add entries under `content/projects/` (or a directory you prefer) and use `src/components/project-card.tsx` to control display.
+
+## Deployment
+- Recommended: Deploy on Vercel for native Next.js support.
+- `@vercel/analytics` is already listed in `package.json` for optional analytics.
+
+## Scripts (from `package.json`)
+- `dev` — runs the Next.js dev server
+- `build` — builds the production output
+- `start` — starts the built app
+- `lint` — run ESLint
+
+## Notes & Maintenance
+- The project uses the App Router; pages live in `src/app` instead of the legacy `pages/` directory.
+- Static media and post assets are placed under `public/media`.
+- Keep dependencies up to date via `pnpm update` and test builds locally before deploying.
+
+## Contributing
+- Create a branch, open a PR with changes, and include a brief description of updates.
+
+---
+Updated to reflect the current repository structure and scripts (pages in `src/app`, content in `content/`, static assets in `public/media`).
