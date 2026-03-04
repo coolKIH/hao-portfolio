@@ -9,10 +9,10 @@ export const metadata: Metadata = {
     title: 'Blog',
 }
 
-export async function generateStaticParams() {
-    const allPosts = await getBlogPosts();
+export function generateStaticParams() {
+    const allPosts = getBlogPosts();
     const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-    
+
     return Array.from({ length: totalPages - 1 }, (_, i) => ({
         page: String(i + 2),
     }));
@@ -34,7 +34,7 @@ export default async function BlogPage({
         redirect('/blog');
     }
 
-    const allPosts = await getBlogPosts();
+    const allPosts = getBlogPosts();
     const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
     if (pageNum > totalPages) {

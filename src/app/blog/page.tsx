@@ -8,8 +8,8 @@ export const metadata: Metadata = {
     title: 'Blog',
 }
 
-export default async function Blog() {
-    const allPosts = await getBlogPosts();
+export default function Blog() {
+    const allPosts = getBlogPosts();
     const posts = allPosts.slice(0, POSTS_PER_PAGE);
 
     return <BlogList posts={posts} currentPage={1} totalPosts={allPosts.length} />;

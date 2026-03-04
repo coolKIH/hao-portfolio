@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
 }): Promise<Metadata> {
     const { slug } = await params;
-    const post = await getPostBySlug(slug);
+    const post = getPostBySlug(slug);
 
     if (!post) {
         return { title: "Post Not Found" };
@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: {
     return { title: post.metadata.title };
 }
 
-export async function generateStaticParams() {
-    const posts = await getBlogPosts();
+export function generateStaticParams() {
+    const posts = getBlogPosts();
     return posts.map((post) => ({
         slug: post.slug,
     }));
@@ -30,7 +30,7 @@ export default async function PostPage({ params }: {
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params;
-    const post = await getPostBySlug(slug);
+    const post = getPostBySlug(slug);
 
     if (!post) {
         notFound();

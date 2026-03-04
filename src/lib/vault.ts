@@ -49,7 +49,7 @@ export interface RawFrontmatter {
  * @param rawData - Raw frontmatter data from gray-matter
  * @returns Normalized PostMetadata object
  */
-function parseMetadata(fileName: string, rawData: RawFrontmatter): PostMetadata {
+function parsePostMetadata(fileName: string, rawData: RawFrontmatter): PostMetadata {
     return {
         slug: fileName.replace(/\.mdx$/, ''),
         title: rawData.title || 'Untitled',
@@ -79,13 +79,13 @@ function parseProjectMetadata(fileName: string, rawData: RawFrontmatter): Projec
  * Posts are sorted by date in descending order (newest first).
  * @returns Array of post metadata sorted by date
  */
-export async function getBlogPosts(): Promise<PostMetadata[]> {
+export function getBlogPosts(): PostMetadata[] {
     const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.mdx'));
 
     const posts = files.map(file => {
         const content = fs.readFileSync(path.join(POSTS_DIR, file), 'utf-8');
         const { data } = matter(content);
-        return parseMetadata(file, data);
+        return parsePostMetadata(file, data);
     });
 
     return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -96,7 +96,7 @@ export async function getBlogPosts(): Promise<PostMetadata[]> {
  * @param slug - The post identifier (e.g., "my-first-post")
  * @returns Post metadata and content, or null if not found or invalid
  */
-export async function getPostBySlug(slug: string) {
+export function getPostBySlug(slug: string): { metadata: PostMetadata; content: string } | null {
     // Validate slug to prevent path traversal attacks
     if (!slug || !SLUG_REGEX.test(slug)) return null;
 
@@ -104,7 +104,7 @@ export async function getPostBySlug(slug: string) {
         const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
         const fileContents = fs.readFileSync(filePath, 'utf-8');
         const { data, content } = matter(fileContents);
-        const metadata = parseMetadata(`${slug}.mdx`, data);
+        const metadata = parsePostMetadata(`${slug}.mdx`, data);
         return { metadata, content };
     } catch (e) {
         console.error(`Error fetching post with slug "${slug}":`, e);
@@ -112,7 +112,7 @@ export async function getPostBySlug(slug: string) {
     }
 }
 
-export async function getProjects(): Promise<ProjectMetadata[]> {
+export function getProjects(): ProjectMetadata[] {
     if (!fs.existsSync(PROJECTS_DIR)) return [];
     const files = fs.readdirSync(PROJECTS_DIR).filter(f => f.endsWith('.mdx'));
 
@@ -128,7 +128,7 @@ export async function getProjects(): Promise<ProjectMetadata[]> {
     });
 }
 
-export async function getProjectBySlug(slug: string) {
+export function getProjectBySlug(slug: string): { metadata: ProjectMetadata; content: string } | null {
     if (!slug || !SLUG_REGEX.test(slug)) return null;
 
     try {
