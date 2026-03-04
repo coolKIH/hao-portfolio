@@ -1,0 +1,121 @@
+import { getProjectBySlug, getProjects } from "@/lib/vault";
+import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import type { Metadata } from 'next';
+import { cn } from "@/lib/utils";
+import { mdxComponents } from "@/lib/mdx-components";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+
+export async function generateMetadata({ params }: {
+    params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+    const { slug } = await params;
+    const project = await getProjectBySlug(slug);
+
+    if (!project) {
+        return { title: "Project Not Found" };
+    }
+
+    return { title: project.metadata.title };
+}
+
+export async function generateStaticParams() {
+    const projects = await getProjects();
+    return projects.map((project) => ({
+        slug: project.slug,
+    }));
+}
+
+export default async function ProjectPage({ params }: {
+    params: Promise<{ slug: string }>
+}) {
+    const { slug } = await params;
+    const project = await getProjectBySlug(slug);
+
+    if (!project) {
+        notFound();
+    }
+
+    const hasContent = project.content.trim().length > 0;
+
+    return (
+        <div>
+            <header className="mb-10">
+                <div className="flex items-center justify-between gap-4 mb-2">
+                    <h1 className="text-3xl font-bold text-foreground">
+                        {project.metadata.title}
+                    </h1>
+                    {(project.metadata.liveUrl || project.metadata.github) && (
+                        <div className="flex items-center gap-3">
+                            {project.metadata.github && (
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    asChild
+                                    className="rounded-full"
+                                >
+                                    <a
+                                        href={project.metadata.github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GitHub
+                                        <ArrowUpRight className="size-4" />
+                                    </a>
+                                </Button>
+                            )}
+                            {project.metadata.liveUrl && (
+                                <Button
+                                    variant="default"
+                                    size="sm"
+                                    asChild
+                                    className="rounded-full bg-brand hover:bg-brand/90 text-primary-foreground"
+                                >
+                                    <a
+                                        href={project.metadata.liveUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Visit Live
+                                        <ArrowUpRight className="size-4" />
+                                    </a>
+                                </Button>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <p className="mt-2 text-lg text-muted-foreground mb-4">
+                    {project.metadata.description}
+                </p>
+                {project.metadata.tech.length > 0 && (
+                    <div className="flex gap-3 flex-wrap">
+                        {project.metadata.tech.map((tech: string) => (
+                            <span
+                                key={tech}
+                                className="px-2 py-0.5 rounded-sm 
+                                            bg-brand/5 dark:bg-brand/10 
+                                            text-muted-foreground text-sm font-medium
+                                            border border-brand/5 dark:border-brand/10"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                )}
+            </header>
+            {hasContent && (
+                <article className={cn(
+                    "prose dark:prose-invert prose-stone max-w-none",
+                    "[&_code::before]:content-none [&_code::after]:content-none",
+                    "[&_:not(pre)>code]:bg-stone-200/50",
+                    "dark:[&_:not(pre)>code]:bg-white/10",
+                    "[&_:not(pre)>code]:rounded-md [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5",
+                    "dark:[&_:not(pre)>code]:text-white/90 [&_:not(pre)>code]:font-medium"
+                )}>
+                    <MDXRemote source={project.content} components={mdxComponents} />
+                </article>
+            )}
+        </div>
+    );
+}

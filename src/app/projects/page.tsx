@@ -1,30 +1,13 @@
 import { ProjectCard } from "@/components/project-card";
 import type { Metadata } from 'next'
+import { getProjects } from "@/lib/vault";
 
 export const metadata: Metadata = {
     title: 'Projects',
 }
 
-export default function Projects() {
-    const projects = [
-        {
-            title: "占位项目 1",
-            description: "这是一个占位项目，用于展示卡片样式和布局。",
-            tech: ["Next.js", "Tailwind", "TypeScript"],
-            link: "#",
-        },
-        {
-            title: "占位项目 2",
-            description: "后续这里会替换为真实项目内容。",
-            tech: ["React", "Node.js"],
-            link: "#",
-        },
-        {
-            title: "占位项目 3",
-            description: "更多项目正在制作中 🚀",
-            tech: ["JavaScript"],
-        },
-    ];
+export default async function Projects() {
+    const projects = await getProjects();
 
     return (
         <div className="space-y-4">
@@ -32,11 +15,11 @@ export default function Projects() {
             <div className="grid gap-4 md:grid-cols-2">
                 {projects.map((p) => (
                     <ProjectCard
-                        key={p.title}
+                        key={p.slug}
                         title={p.title}
                         description={p.description}
                         tech={p.tech}
-                        link={p.link}
+                        slug={p.slug}
                     />
                 ))}
             </div>

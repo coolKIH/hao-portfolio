@@ -4,6 +4,7 @@ import path from 'path';
 
 // Directory containing all blog post MDX files
 const POSTS_DIR = path.join(process.cwd(), 'content/posts');
+const PROJECTS_DIR = path.join(process.cwd(), 'content/projects');
 
 // Regex to validate slug format and prevent path traversal attacks
 const SLUG_REGEX = /^[a-zA-Z0-9-_]+$/;
@@ -16,6 +17,18 @@ export interface PostMetadata {
     location?: string;
     description?: string;
     tags?: string[];
+}
+
+export interface ProjectMetadata {
+    slug: string;
+    title: string;
+    description: string;
+    tech: string[];
+    priority: number;
+    date?: string;
+    location?: string;
+    liveUrl?: string;
+    github?: string;
 }
 
 /**
@@ -32,6 +45,20 @@ function parseMetadata(fileName: string, rawData: any): PostMetadata {
         location: rawData.location || undefined,
         description: rawData.description || undefined,
         tags: Array.isArray(rawData.tags) ? rawData.tags : (rawData.tags ? [rawData.tags] : []),
+    };
+}
+
+function parseProjectMetadata(fileName: string, rawData: any): ProjectMetadata {
+    return {
+        slug: fileName.replace(/\.mdx$/, ''),
+        title: rawData.title || 'Untitled',
+        description: rawData.description || '',
+        tech: Array.isArray(rawData.tech) ? rawData.tech : [],
+        priority: typeof rawData.priority === 'number' ? rawData.priority : 0,
+        date: rawData.date || undefined,
+        location: rawData.location || undefined,
+        liveUrl: rawData.liveUrl || undefined,
+        github: rawData.github || undefined,
     };
 }
 
@@ -69,6 +96,37 @@ export async function getPostBySlug(slug: string) {
         return { metadata, content };
     } catch (e) {
         console.error(`Error fetching post with slug "${slug}":`, e);
+        return null;
+    }
+}
+
+export async function getProjects(): Promise<ProjectMetadata[]> {
+    if (!fs.existsSync(PROJECTS_DIR)) return [];
+    const files = fs.readdirSync(PROJECTS_DIR).filter(f => f.endsWith('.mdx'));
+
+    const projects = files.map(file => {
+        const content = fs.readFileSync(path.join(PROJECTS_DIR, file), 'utf-8');
+        const { data } = matter(content);
+        return parseProjectMetadata(file, data);
+    });
+
+    return projects.sort((a, b) => {
+        if (b.priority !== a.priority) return b.priority - a.priority;
+        return a.title.localeCompare(b.title);
+    });
+}
+
+export async function getProjectBySlug(slug: string) {
+    if (!slug || !SLUG_REGEX.test(slug)) return null;
+
+    try {
+        const filePath = path.join(PROJECTS_DIR, `${slug}.mdx`);
+        const fileContents = fs.readFileSync(filePath, 'utf-8');
+        const { data, content } = matter(fileContents);
+        const metadata = parseProjectMetadata(`${slug}.mdx`, data);
+        return { metadata, content };
+    } catch (e) {
+        console.error(`Error fetching project with slug "${slug}":`, e);
         return null;
     }
 }
