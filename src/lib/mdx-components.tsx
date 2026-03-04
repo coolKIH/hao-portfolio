@@ -1,6 +1,14 @@
 import Image from "next/image";
 
-function MdxImage(props: any) {
+interface MdxImageProps {
+    src: string;
+    alt?: string;
+    width?: string | number;
+    height?: string | number;
+    caption?: string;
+}
+
+function MdxImage(props: MdxImageProps) {
     const width = props.width ? Number(props.width) : 1200;
     const height = props.height ? Number(props.height) : 800;
     const { caption, ...imageProps } = props;

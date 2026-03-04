@@ -31,13 +31,25 @@ export interface ProjectMetadata {
     github?: string;
 }
 
+export interface RawFrontmatter {
+    title?: string;
+    date?: string;
+    location?: string;
+    description?: string;
+    tags?: string[] | string;
+    tech?: string[] | string;
+    priority?: number;
+    liveUrl?: string;
+    github?: string;
+}
+
 /**
  * Parses frontmatter data from MDX files into standardized PostMetadata.
  * @param fileName - The MDX file name (e.g., "my-post.mdx")
  * @param rawData - Raw frontmatter data from gray-matter
  * @returns Normalized PostMetadata object
  */
-function parseMetadata(fileName: string, rawData: any): PostMetadata {
+function parseMetadata(fileName: string, rawData: RawFrontmatter): PostMetadata {
     return {
         slug: fileName.replace(/\.mdx$/, ''),
         title: rawData.title || 'Untitled',
@@ -48,7 +60,7 @@ function parseMetadata(fileName: string, rawData: any): PostMetadata {
     };
 }
 
-function parseProjectMetadata(fileName: string, rawData: any): ProjectMetadata {
+function parseProjectMetadata(fileName: string, rawData: RawFrontmatter): ProjectMetadata {
     return {
         slug: fileName.replace(/\.mdx$/, ''),
         title: rawData.title || 'Untitled',
