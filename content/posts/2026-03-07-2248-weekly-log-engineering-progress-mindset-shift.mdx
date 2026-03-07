@@ -1,0 +1,59 @@
+---
+title: "Weekly Log: Engineering Progress & Mindset Shift"
+date: "2026-03-07 22:26:44 +0800"
+location: "书桌"
+description: "Reflecting on architecture refactoring, the value of TypeScript, and a shift from 'can I do it' to 'is it worth doing'."
+tags: ["Weekly Log", "Engineering", "TypeScript", "Product Mindset"]
+---
+
+## 🚀 Portfolio Engineering
+
+### Major Architecture Change
+I’ve transitioned from fetching Blog content via the GitHub API to serving it directly from the local `content/` directory.
+* **Why:** To remove unnecessary external data requests and simplify the workflow.
+* **Benefit:** This refactoring allows the Portfolio to render media resources (images, videos) directly from the `public/` directory, leveraging static resource optimization instead of dynamic API calls.
+
+### Feature Updates
+* **Dynamic Pagination:** Migrated from query parameters (`/blog/?page=1`) to dynamic routes (`/blog/page/1`). This enables **Static Site Generation (SSG)** for all paginated lists, making the browsing experience seamless.
+* **MDX Image Component:** Added support for a custom `<Image>` component with optional Captions, fully integrated with `next/image` for performance.
+* **Documentation:** Updated the project **README** to reflect the latest architecture and instructions.
+* **Cleanup:** Removed the legacy "Lab" page that was used for initial testing.
+
+---
+
+## 📝 Content & Projects
+
+### New Blog Posts
+This week, I published two articles:
+1.  **Build Log: Simplifying the System, Clarifying the Intent** (Deep dive into the 'why' behind my technical choices).
+2.  **Happy Lantern Festival | 元宵节快乐 🏮** (A personal reflection on the festival).
+
+### Project Showcase
+* **Hao's Portfolio:** Added the first project entry—the portfolio itself—detailing its tech stack and design philosophy.
+* **Zard Songs:** Polished the UI/UX and audio resource handling. It was a joy to make this project "work again" with a more satisfying experience before featuring it here.
+
+---
+
+## 🧠 Pickup & Takeaways
+
+### The Mindset Shift
+* **"Is it worth doing?" vs. "Can I do it?":** As engineers, we often get caught up in the technical possibility. This week, I’ve started asking about the value first.
+* **Feature-thinking:** For any new requirement, I now pause to think: *What am I solving? What are the options A/B/C? What are my concerns?* Then, I use AI to amplify my execution. This leads to more clarity and less friction.
+* **Don't Over-engineer:** I gave up the "two-repo architecture" because the "need for private blog posts" was a hypothetical scenario that never materialized. **Less is more.**
+
+### Technical Insights
+* **The Power of TypeScript:** TS isn't just about catching errors at compile time. It acts as the **best form of documentation**. Enforcing types makes collaboration smoother and refactoring far less error-prone. It’s about clarity for both the developer and the IDE.
+* **Case-insensitive Filesystems:** A reminder for macOS users: APFS ignores case changes in filenames. If you rename `Nav.tsx` to `nav.tsx`, Git might not see it, leading to production build errors. Always use `git mv`.
+* **Baseline (MDN):** I’ve gained a new appreciation for this keyword. It provides a clear standard for "widely available" features, helping me decide which modern CSS/JS to adopt with confidence.
+
+### Personal Growth
+* **Letting go of "Professional Exposure" fear:** I'm becoming more open to judgment and failure. Being "out there" is the first step toward new opportunities.
+
+---
+
+## 🎵 Weekly Soundtrack
+**"The River of Dreams" — Billy Joel**
+
+> In the middle of the night, I go walking in my sleep...
+
+A reminder of the constant search for meaning and the bridges we build between our reality and our dreams.
