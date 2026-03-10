@@ -1,0 +1,47 @@
+---
+title: "Zard Songs: A Digital Sanctuary"
+description: "A high-fidelity trilingual lyrics archive and audio player dedicated to the legacy of Izumi Sakai (ZARD)."
+tech: ["Vue.js", "Bootstrap 5", "Python (Scrapy)", "CSS3", "HTML5 Boilerplate"]
+priority: 50
+github: "https://github.com/coolKIH/ZardSongs"
+liveUrl: "https://coolkih.github.io/ZardSongs/"
+---
+
+## 1. The Vision: From Data Crawling to Tribute
+**Zard Songs** is more than just a fan site; it is a technical tribute designed to preserve the discography of **Izumi Sakai (ZARD)**. Originally launched in 2018, this project showcases the full lifecycle of a product—from automated data collection to modern UI refinement.
+
+* **The Problem**: ZARD’s lyrics are often fragmented across legacy forums, making it difficult for global fans to learn the Japanese originals alongside translations.
+* **The Solution**: A "three-dimensional" lyrics engine providing Japanese, Chinese, and Romaji side-by-side, integrated with a seamless audio playback experience.
+* **The Aesthetic**: A "Nostalgic-Minimalist" design inspired by the iconic purple tones of the *Yureru Omoi* era.
+
+---
+
+## 2. Core Features
+* **Trilingual Engine**: A structured archive of 90+ songs. Lyrics are mapped in a 3-column grid for real-time comparative reading and language learning.
+* **The "Eternal Hero" Section**: A 100vh immersive landing experience with a fixed-position background that stays static as the content scrolls, creating a sophisticated parallax effect.
+* **Dynamic Search**: A lightning-fast, frontend-driven filter that allows users to instantly find tracks within a 300KB+ JSON dataset.
+* **Integrated Media Player**: A custom-built, state-aware audio interface that manages playback transitions ("Loading" vs. "Enjoying") via Vue data observers.
+
+---
+
+## 3. Technical Highlights
+
+### The Data Pipeline (The "Backstage")
+This project began as a **Full Stack exercise**. I utilized **Python** and web crawling frameworks to scrape unstructured lyric data from fan threads, which was then cleaned and transformed into a structured **306KB JSON** payload. This ensures the application remains a "Single Page Experience" with zero database overhead.
+
+### Engineering Challenges
+
+#### **The Mobile "Fixed-Background" Fix**
+Standard `background-attachment: fixed` is notoriously unsupported or buggy on mobile browsers (iOS Safari/Chrome). 
+* **The Innovation**: I implemented a modern CSS **`clip-path`** strategy to bypass hardware-acceleration limitations. This allows the hero image to remain perfectly static on mobile devices, achieving the same "scroll-over" effect found on desktop.
+
+#### **Performance & State Management**
+* **Pre-fetching**: To ensure the high-resolution hero image doesn't "pop in," I implemented an asset pre-loader in `main.js` using `new Image().src` to warm the browser cache before the fade-in animation triggers.
+* **Audio State**: I leveraged a hidden HTML5 `<audio>` element as the "Source of Truth." By registering event listeners for `playing`, `ended`, and `error`, the Vue instance reactively updates the global UI state without the need for a heavy state management library like Vuex.
+
+---
+
+## 4. The Personal Touch
+This project represents my transition from a "code-first" developer to a **Product Engineer**. Moving the search and playback controls from raw, fixed elements to an integrated, responsive layout shows a commitment to **UI/UX maturity**. It’s about creating a "digital sanctuary" where the technology serves the emotion of the music.
+
+> "A tribute that balances technical precision with deep nostalgia."
