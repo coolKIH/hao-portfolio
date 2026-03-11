@@ -1,36 +1,36 @@
 ---
 title: "Hao's Portfolio"
-description: "A high-performance digital garden engineered with Next.js 15 and Tailwind CSS, pushing the boundaries of App Router and MDX-driven development."
+description: "A digital garden built with Next.js 15 and Tailwind CSS 4, focusing on App Router architecture and MDX-based content management."
 tech: ["Next.js", "TypeScript", "Tailwind CSS 4", "shadcn", "MDX"]
 priority: 100
 github: "https://github.com/coolKIH/hao-portfolio"
 ---
 
-This project is more than a simple showcase; it’s a technical sandbox where I iterate on peak performance and minimalist aesthetics.
+This project serves as both a personal showcase and a technical sandbox for exploring minimalist web patterns and performance optimization.
 
-**Hao's Portfolio** is built on the **Next.js App Router** architecture, with core logic driven by **Server Components**. By using **MDX** as a local-first content engine, I’ve balanced developer flexibility with low-maintenance stability. Through a library of reusable **React** primitives, the storytelling in both the Blog and Projects sections is both fluid and structurally sound.
+**Hao's Portfolio** is built on the **Next.js App Router**, with logic primarily handled by **Server Components**. By using **MDX** as a local-first content engine, the site achieves a balance between writing flexibility and architectural stability. A library of shared **React** primitives ensures that both the Blog and Projects sections remain visually and structurally consistent.
 
 ### Core Features
 
-- **Content-First Architecture**: By colocating blogs and projects as local **MDX** files, I’ve eliminated external CMS overhead. This ensures full version control and a frictionless, offline-capable writing workflow.
-- **Fluid Responsiveness**: Engineered with **Tailwind CSS 4**, the UI provides a consistent, high-fidelity experience across everything from mobile touchpoints to ultra-wide desktop displays.
-- **Adaptive Theme Engine**: Leveraging **next-themes**, the site intelligently mirrors system preferences, ensuring a comfortable reading experience that respects the user's environment.
-- **Inclusive & Accessible Design**: Prioritizing high-contrast typography and semantic HTML (A11y) to ensure a premium, barrier-free reading experience for all users.
-- **SEO & Core Web Vitals**: Utilizing **Static Site Generation (SSG)** and **React Server Components (RSC)**, the site delivers a near-instant Time to First Byte (TTFB) while ensuring search engines can easily index its content.
+- **Content-First Architecture**: Blogs and projects are managed as local **MDX** files, removing the need for an external CMS. This approach provides full version control and a straightforward, offline-ready workflow.
+- **Fluid Responsiveness**: Built with **Tailwind CSS 4**, the layout adapts across mobile, tablet, and desktop viewports while maintaining a consistent design system.
+- **Adaptive Theme Engine**: Implemented via **next-themes**, the UI respects system color preferences to provide a comfortable reading experience in both light and dark modes.
+- **Semantic Accessibility**: Focused on high-contrast typography and semantic HTML to ensure the site is navigable and readable for all users.
+- **SEO & Performance**: Leverages **Static Site Generation (SSG)** and **React Server Components** to minimize initial load times and ensure content is easily indexable by search engines.
 
 ### Technical Highlights
 
-- **Lean Rendering Strategy**: By maximizing **RSCs**, I’ve moved the heavy lifting to the server, significantly reducing the client-side **JavaScript footprint**. 
-- **Advanced MDX Image Engine**: Custom-engineered MDX components that map standard Markdown syntax to `next/image`. This system handles automatic format conversion (WebP/AVIF) and layout-shift prevention, while adding support for **optional semantic captions**—providing a polished, magazine-like reading experience.
-- **Atomic Design System**: A unified styling layer built on **Tailwind** and **shadcn** primitives, providing a predictable, accessible, and scalable design language that remains easy to refactor.
-- **Rich-Media MDX**: Utilizing **next-mdx-remote** with RSC support, I can embed interactive modules and rich media directly within articles, bypassing the expressive limits of standard Markdown.
-- **End-to-End Type Safety**: The entire stack is hardened with **TypeScript**. From data fetching to UI rendering, strict typing minimizes runtime regressions and improves long-term maintainability.
-- **GitOps Workflow**: Content and code live in a single source of truth. This approach simplifies the pipeline from a local `commit` to a global Vercel deployment.
+- **Lean Client Footprint**: By utilizing **RSCs**, the application minimizes the amount of client-side JavaScript required, leading to faster interaction times.
+- **Custom MDX Image Engine**: Custom components map standard Markdown image syntax to `next/image`. This handles automatic format optimization (WebP/AVIF) and prevents layout shifts, with support for semantic captions.
+- **Atomic Styling**: Uses a unified design layer based on **Tailwind** and **shadcn/ui**, creating a predictable and scalable CSS structure that is easy to maintain.
+- **Flexible MDX Rendering**: Uses **next-mdx-remote** to render rich content, allowing for the inclusion of interactive React components directly within Markdown files.
+- **Type-Safe Development**: The project is built with strict **TypeScript** configurations. From data retrieval to UI components, typing helps prevent regressions and clarifies the data flow.
+- **Integrated Workflow**: Code and content are colocated in a single repository, allowing for a simplified deployment process from a local `git commit` to production.
 
 ---
 
 ### Personal Reflection
 
-Building this site was a conscious exercise in **essentialism**. In a web ecosystem often cluttered with heavy frameworks and unnecessary tracking, I wanted to prove that a personal site could be both technically sophisticated and visually quiet. 
+Building this site was a conscious exercise in **essentialism**. In a web ecosystem often filled with heavy dependencies and tracking scripts, I wanted to create a space that is technically sound yet visually quiet.
 
-The biggest challenge wasn't the code itself, but the "un-learning"—deciding what to leave out to ensure the content remains the focal point. This portfolio serves as a living document of my philosophy: that the best engineering often feels invisible to the user, manifesting instead as speed, clarity, and ease of use.
+The primary challenge was "un-learning"—deciding which features to omit to ensure the content remains the priority. This portfolio reflects my belief that good engineering should be felt rather than seen, manifesting as speed, clarity, and ease of use.
