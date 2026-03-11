@@ -64,7 +64,8 @@ export default function RootLayout({
 
               hidden sm:block
               sm:top-5 sm:right-5 sm:w-20 sm:h-20
-              md:top-12 md:right-12 md:w-24 md:h-24
+              md:top-8 md:right-8 md:w-22 md:h-22
+              lg:top-12 lg:right-12 lg:w-24 lg:h-24
 
               animate-float animate-paused
               hover:animate-running
