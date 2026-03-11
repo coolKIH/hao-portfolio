@@ -1,57 +1,57 @@
 ---
 title: "Zard Songs"
-description: "A high-fidelity trilingual lyrics archive and audio player dedicated to the legacy of Izumi Sakai (ZARD)."
+description: "A trilingual lyrics archive and audio player dedicated to the discography of Izumi Sakai (ZARD)."
 tech: ["Vue.js", "Bootstrap 5", "Python (Scrapy)", "CSS3", "HTML5 Boilerplate"]
 priority: 50
 github: "https://github.com/coolKIH/ZardSongs"
 liveUrl: "https://coolkih.github.io/ZardSongs/"
 ---
 
-## 1. The Vision: A Legacy Reborn
+## 1. Project Overview
 
-**Zard Songs** is a digital sanctuary dedicated to **Izumi Sakai (ZARD)**. Originally conceived in 2018 as a 25th-anniversary tribute, the project has evolved from a local data-crawling experiment into a polished, mobile-responsive web application.
+**Zard Songs** is a specialized web application designed to archive and present the lyrics of **Izumi Sakai (ZARD)**. Originally started in 2018 as a data-crawling experiment, the project evolved into a responsive frontend application focused on bilingual accessibility and clean media integration.
 
-* **The Problem**: ZARD’s lyrics are often scattered across the web in fragmented or poorly translated formats.
-* **The Solution**: A centralized, "three-dimensional" lyrics engine presenting the Japanese original, Chinese translation, and Romaji side-by-side, paired with integrated audio playback to help fans learn and sing along.
-* **The Design Language**: A "Nostalgic-Minimalist" aesthetic, utilizing the iconic purple tones from the *Yureru Omoi* era to evoke the feeling of a live concert.
-
----
-
-## 2. Core Features (The User Experience)
-
-* **The "Eternal Hero" Section**: A 100vh immersive landing experience featuring a fixed-position tribute photo that remains static as the page content scrolls over it, creating a deep parallax effect.
-* **Trilingual Lyric Engine**: A linear, performance-optimized archive of 90 songs. Lyrics are mapped in a 3-column grid for real-time comparative reading.
-* **Dynamic Search & Filtering**: A lightning-fast frontend filter that allows users to instantly find tracks by title within the 300KB+ JSON dataset.
-* **Integrated Media Player**: A custom-built, floating audio interface that manages playback states without refreshing the page.
-* **Smart Pagination**: To ensure fast initial load times, the app uses a "Load More" pattern, rendering only 6 songs by default to keep the DOM lightweight.
+* **Objective**: To centralize ZARD’s discography, which is often fragmented across various web sources.
+* **The Solution**: A comparative lyrics engine displaying Japanese, Chinese, and Romaji side-by-side, paired with a custom audio interface for synchronized listening.
+* **Design Approach**: A minimalist interface utilizing a purple-toned palette inspired by the *Yureru Omoi* album era, prioritizing content readability over decorative elements.
 
 ---
 
-## 3. Technical Highlights (The Engineer’s View)
+## 2. Functional Features
+
+* **Immersive Hero Section**: A full-height landing view utilizing a fixed-position background that stays static during scrolling, providing a clean visual introduction to the site.
+* **Trilingual Lyric Layout**: An archive of 90 songs organized in a three-column grid. This layout allows for real-time comparison between the original Japanese text and its translations.
+* **Instant Filter System**: A frontend search implementation that filters the 300KB+ JSON dataset in real-time as the user types, providing immediate access to specific tracks.
+* **Integrated Audio Controls**: A floating playback interface that manages global audio states, allowing users to listen to tracks while navigating the lyrics archive.
+* **Incremental Rendering**: To maintain performance, the application renders 6 songs by default, using a "Load More" pattern to keep the DOM size manageable.
+
+---
+
+## 3. Technical Implementation
 
 ### The Stack
-* **Frontend**: Vue.js 2.7 (CDN-loaded) + Vanilla JavaScript.
-* **Styling**: Bootstrap 5 + Custom CSS (utilizing modern properties like `clip-path`).
-* **Data Architecture**: A structured 306KB JSON payload containing all song metadata and lyrics, fetched asynchronously via `vue-resource`.
+* **Frontend**: Vue.js 2.7 (CDN-loaded) and Vanilla JavaScript.
+* **Styling**: Bootstrap 5 and Custom CSS (including `clip-path` for modern layout effects).
+* **Data Management**: A structured 306KB JSON payload containing song metadata, fetched asynchronously via `vue-resource`.
 
-### Engineering Challenges & Solutions
+### Engineering Challenges
 
-#### **The Mobile "Fixed-Background" Paradox**
-Replicating the "fixed background" hero effect on mobile browsers (iOS Safari/Chrome) is a notorious challenge due to limited support for `background-attachment: fixed`.
-* **The Fix**: I implemented a modern CSS **`clip-path`** strategy. By defining a fixed container and clipping the viewable area, I bypassed mobile hardware-acceleration limitations, achieving a smooth 60fps parallax effect across all devices.
+#### **Mobile Parallax Stability**
+Implementing a "fixed background" effect on mobile browsers is often inconsistent due to varying support for `background-attachment: fixed`.
+* **Solution**: I used a **`clip-path`** strategy. By defining a fixed container and clipping the viewable area, I bypassed hardware-acceleration limitations on iOS and Android browsers, ensuring a smooth scroll effect across devices.
 
-#### **Stateful Audio Management**
-Even in a Single Page Application without a complex state manager like Vuex, I maintained a robust audio state.
-* **Mechanism**: A hidden HTML5 `<audio>` element serves as the "source of truth." Vue data observers monitor the element's event listeners—specifically `playing`, `ended`, and `error`—to update the global `playStatus` and toggle the "Now Playing" floating UI. This ensures immediate feedback (e.g., "(ERROR Loading)") if a link is broken.
+#### **Stateful Audio Logic**
+Without a dedicated state management library like Vuex, I implemented a centralized audio controller within the main Vue instance.
+* **Mechanism**: A hidden HTML5 `<audio>` element acts as the source of truth. Vue data observers monitor listeners like `playing`, `ended`, and `error` to update the global `playStatus`. This provides immediate UI feedback if a media link fails to load.
 
-#### **Performance & Asset Loading**
-* **Pre-fetching**: To prevent "pop-in" during the hero animation, I implemented a manual image pre-loader in `main.js` using `new Image().src`, ensuring the tribute photo is pre-loaded to prevent visual 'pop-in' during the hero fade-in transition.
-* **Asset Decoupling**: To keep the Git repository lean, large media files (MP3s) are hosted externally and linked dynamically, separating application logic from heavy binary assets.
+#### **Asset Optimization**
+* **Image Pre-loading**: To prevent visual "pop-in" during the initial fade-in transition, I implemented a manual pre-loader in `main.js` that triggers before the hero animation begins.
+* **External Hosting**: Large MP3 files are hosted on external servers and linked dynamically. This keeps the Git repository lightweight while allowing the application to scale its content without increasing build times.
 
 ---
 
-## 4. Personal Reflection: The Product Mindset
+## 4. Personal Reflection
 
-This project represents my growth as an engineer. What started as a **Python-based web crawling** exercise to scrape and clean unstructured data from fan forums has served as a **deep dive into iterative UI/UX refinement**, focusing on how small layout changes can drastically improve a user's connection to the content.
+This project reflects an iterative approach to development. It began as a **Python-based web scraping** project to gather and clean unstructured data from various forums and has since served as a practical study in **UI/UX refinement**.
 
-I am particularly proud of the **UI Evolution**: moving the search and playback controls from "raw" fixed elements into a cohesive, integrated layout that integrates UI elements into a layout that avoids obstructing the hero imagery while maintaining accessibility. It’s not just about the code; it’s about creating a "digital sanctuary" where technology disappears, and the music takes center stage.
+The primary focus was moving from "raw" data display to an integrated layout where playback and search controls are accessible without obstructing the visual experience. It was a lesson in building a specialized tool that serves a specific community by focusing on clarity, speed, and functional design.
