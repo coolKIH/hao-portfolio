@@ -9,11 +9,20 @@ interface ProjectCardProps {
 
 export function ProjectCard({ title, description, tech, slug }: ProjectCardProps) {
     return (
-        <div className="border border-stone-200 dark:border-stone-700 rounded-xl p-6 space-y-4 hover:shadow-md transition-shadow">
-            <Link href={`/projects/${slug}`}>
-                <h3 className="text-xl font-semibold text-foreground hover:underline mb-3">{title}</h3>
-            </Link>
-            <p className="text-foreground">{description}</p>
+        <div className="flex flex-col h-full border border-stone-200 dark:border-stone-700 rounded-xl p-6 space-y-4 hover:shadow-md transition-shadow">
+
+            <div className="flex-1">
+                <Link href={`/projects/${slug}`}>
+                    <h3 className="text-xl font-semibold text-foreground hover:underline mb-2 line-clamp-1"
+                        title={title}>
+                        {title}
+                    </h3>
+                </Link>
+                <p className="text-foreground line-clamp-3" title={description}>
+                    {description}
+                </p>
+            </div>
+
             {tech && tech.length > 0 && (
                 <div className="flex flex-wrap gap-2 pt-1">
                     {tech.map((t) => (
