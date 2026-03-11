@@ -42,7 +42,7 @@ export default async function ProjectPage({ params }: {
     return (
         <div>
             <header className="mb-10">
-                <div className="flex items-center justify-between gap-4 mb-2">
+                <div className="flex flex-col md:flex-row md:justify-between gap-2 md:gap-4 mb-2">
                     <h1 className="text-3xl font-bold text-foreground">
                         {project.metadata.title}
                     </h1>
@@ -70,7 +70,7 @@ export default async function ProjectPage({ params }: {
                                     variant="default"
                                     size="sm"
                                     asChild
-                                    className="rounded-full bg-brand hover:bg-brand/90 text-primary-foreground"
+                                    className="rounded-full bg-brand hover:bg-brand/90"
                                 >
                                     <a
                                         href={project.metadata.liveUrl}
@@ -85,7 +85,7 @@ export default async function ProjectPage({ params }: {
                         </div>
                     )}
                 </div>
-                <p className="mt-2 text-lg text-muted-foreground mb-4">
+                <p className="mt-2 text-muted-foreground mb-4 md:text-lg">
                     {project.metadata.description}
                 </p>
                 {project.metadata.tech.length > 0 && (
@@ -95,7 +95,7 @@ export default async function ProjectPage({ params }: {
                                 key={tech}
                                 className="px-2 py-0.5 rounded-sm 
                                             bg-brand/5 dark:bg-brand/10 
-                                            text-muted-foreground text-sm font-medium
+                                            text-muted-foreground text-xs md:text-sm font-medium
                                             border border-brand/5 dark:border-brand/10"
                             >
                                 {tech}
