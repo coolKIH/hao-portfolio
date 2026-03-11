@@ -1,7 +1,7 @@
 ---
 title: "Hao's Portfolio"
 description: "A high-performance digital garden engineered with Next.js 15 and Tailwind CSS, pushing the boundaries of App Router and MDX-driven development."
-tech: ["Next.js", "TypeScript", "Tailwind CSS 4", "MDX"]
+tech: ["Next.js", "TypeScript", "Tailwind CSS 4", "shadcn", "MDX"]
 priority: 100
 github: "https://github.com/coolKIH/hao-portfolio"
 ---
@@ -22,7 +22,7 @@ This project is more than a simple showcase; it’s a technical sandbox where I 
 
 - **Lean Rendering Strategy**: By maximizing **RSCs**, I’ve moved the heavy lifting to the server, significantly reducing the client-side **JavaScript footprint**. 
 - **Advanced MDX Image Engine**: Custom-engineered MDX components that map standard Markdown syntax to `next/image`. This system handles automatic format conversion (WebP/AVIF) and layout-shift prevention, while adding support for **optional semantic captions**—providing a polished, magazine-like reading experience.
-- **Atomic Design System**: A unified styling layer built on **Tailwind**, providing a predictable and scalable design language that remains easy to refactor.
+- **Atomic Design System**: A unified styling layer built on **Tailwind** and **shadcn** primitives, providing a predictable, accessible, and scalable design language that remains easy to refactor.
 - **Rich-Media MDX**: Utilizing **next-mdx-remote** with RSC support, I can embed interactive modules and rich media directly within articles, bypassing the expressive limits of standard Markdown.
 - **End-to-End Type Safety**: The entire stack is hardened with **TypeScript**. From data fetching to UI rendering, strict typing minimizes runtime regressions and improves long-term maintainability.
 - **GitOps Workflow**: Content and code live in a single source of truth. This approach simplifies the pipeline from a local `commit` to a global Vercel deployment.
