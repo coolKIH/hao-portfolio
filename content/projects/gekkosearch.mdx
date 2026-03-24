@@ -1,0 +1,123 @@
+---
+title: GekkoSearch – FinSearch
+description: A financial data platform integrating multi-source documents with powerful search, structured data, and interactive document viewing.
+tech: ["Vue", "JavaScript", "PDF.js", "D3.js", "Elasticsearch", "Node.js"]
+priority: 100
+---
+
+## Overview
+
+GekkoSearch is a financial data SaaS platform mainly focused on the Hong Kong market. It aggregates and structures data from sources such as HKEX and other financial datasets, connecting documents with related entities such as companies, people, and events.
+
+The platform is designed to help professionals quickly locate relevant information and derive insights from large volumes of financial data.
+
+## My Role
+
+- **Led the design and development** of the product frontend during its early stage, establishing the foundation of the platform
+
+- **Designed and implemented core user experiences** across search, document interaction, and visualization, iterating based on product requirements and feedback
+
+- **Worked closely with backend engineers** to adopt data structures and ensure seamless integration between search, data processing, and frontend interaction
+
+## Key Contributions
+
+### Search Experience & Interaction
+
+- Improved the usability of search forms and interactions, with support for keyboard-driven workflows (e.g. Arrow Navigation, Quick Selection)
+
+- Designed and implemented reusable Vue components (e.g. Ticker Input, Event Impact Card)
+
+- Integrated lightweight data visualizations using `D3.js` to facilitate search and filtering
+
+### Document Viewer System
+
+- Built an interactive PDF viewer supporting:
+  - Snippet-based navigation (search → document location)
+  - Highlighting and annotation (system + user-generated)
+  - Multi-page snippet handling
+
+- Designed and implemented a dual document view for side-by-side comparison, with synchronized scrolling and difference highlighting
+
+- Implemented an end-to-end pipeline connecting search results to PDF highlights, enabling users to jump directly from snippets to document content
+
+### UI/UX & Interface Design
+
+- Led the design and development of the platform’s frontend during its early stage, shaping the overall UI structure, interaction patterns, and visual direction
+- Established the initial user experience across core workflows, including search and document reading
+- Explored partial mobile support for simpler views (e.g. document reading), while the primary experience remained desktop-focused
+
+---
+
+## Case Study: Snippet → PDF Highlight
+
+### Problem
+
+Financial PDFs are difficult to work with:
+
+- Content is unstructured and hard to search  
+- Layouts are complex (tables, multi-column, mixed languages)  
+- Search results are not naturally linked to document positions  
+- Rendering (PDF viewer) is disconnected from search systems  
+
+We needed to let users **search → preview → locate → interact** within documents.
+
+### Solution Overview
+
+I designed the pipeline to connect search, text extraction, and document rendering:
+
+```
+PDF → Text → Search → Snippet → Position Mapping → PDF Highlight
+```
+
+This enables direct navigation from search results to the corresponding location in the document.
+
+#### Making PDFs Searchable
+
+- Extracted text using PDF.js in Node.js
+- Built a custom converter for batch processing and structured outputs
+
+**Challenge:** text is often fragmented  
+**Solution:** reconstructed words based on spatial relationships
+
+#### Position Mapping
+
+- Injected position markers (e.g. page info) into text  
+- Removed them during indexing using Elasticsearch `char_filter`, while preserving mapping ability
+
+#### Mapping Snippets Back to PDF
+
+The core challenge was matching snippet text to rendered HTML.
+
+- Used PDF.js text layer (HTML-based)
+- Generated regex tolerant of HTML structure (spans, styles, layout nodes)
+- Wrapped matched content with custom `<span>` for highlighting
+
+#### Handling Edge Cases
+
+- **Multi-page snippets:** matched per page with context-aware selection  
+- **Lazy rendering:** re-applied highlights on PDF.js render events  
+- **Content mismatch:** used tolerant matching to ignore layout noise  
+
+#### Comments & Annotations
+
+- Supported user text selection, highlighting, and commenting  
+- Reused the same mapping logic for persistence and navigation  
+
+#### Trade-offs & Limitations
+
+- Relies heavily on DOM manipulation  
+- Tight coupling with PDF.js  
+- Viewer logic became large and difficult to maintain  
+
+### What I Would Improve
+
+- Modularize viewer architecture  
+- Extend or fork PDF.js instead of patching via DOM  
+- Introduce structured position indexing  
+- Improve separation of concerns  
+
+### Impact
+
+- Improved navigation and usability of financial documents  
+- Enabled workflows such as highlighting and commenting  
+- Provided a foundation for further document-based features  
