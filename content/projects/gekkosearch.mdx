@@ -61,9 +61,9 @@ Financial PDFs are difficult to work with:
 
 We needed to let users **search → preview → locate → interact** within documents.
 
-### Solution Overview
+### Solution
 
-I designed the pipeline to connect search, text extraction, and document rendering:
+Designed the pipeline to connect search, text extraction, and document rendering:
 
 ```
 PDF → Text → Search → Snippet → Position Mapping → PDF Highlight
@@ -74,15 +74,18 @@ This enables direct navigation from search results to the corresponding location
 #### Making PDFs Searchable
 
 - Extracted text using PDF.js in Node.js
-- Built a custom converter for batch processing and structured outputs
+- **Built a custom converter** for batch processing and structured outputs
 
-**Challenge:** text is often fragmented  
-**Solution:** reconstructed words based on spatial relationships
+Challenge: text is often fragmented  
+Solution: reconstructed words based on spatial relationships
 
-#### Position Mapping
+#### Snippet Navigation
 
-- Injected position markers (e.g. page info) into text  
-- Removed them during indexing using Elasticsearch `char_filter`, while preserving mapping ability
+Designed and implemented a position mapping system for snippet navigation.
+
+- Injected position markers (e.g. page number, line number, detected table) into text  
+- Filtered out markers during Elasticsearch indexing via a custom `char_filter` so they don’t affect search, while keeping them for frontend snippet rendering
+- Implemented frontend rendering to display snippet location and support direct navigation to the corresponding document position with highlighting
 
 #### Mapping Snippets Back to PDF
 
@@ -103,7 +106,7 @@ The core challenge was matching snippet text to rendered HTML.
 - Supported user text selection, highlighting, and commenting  
 - Reused the same mapping logic for persistence and navigation  
 
-#### Trade-offs & Limitations
+### Trade-offs & Limitations
 
 - Relies heavily on DOM manipulation  
 - Tight coupling with PDF.js  
