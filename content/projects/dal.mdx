@@ -1,0 +1,200 @@
+---
+title: "DAL (Data Access Layer)"
+description: "A centralized backend system powering multiple SaaS products, featuring advanced search capabilities and production-grade data infrastructure."
+tech: ["Go", "Gin", "Elasticsearch", "MySQL", "MongoDB", "Neo4j", "Docker"]
+priority: 110
+---
+
+## Overview
+
+DAL (Data Access Layer) is a centralized backend service that acts as the core API layer for multiple internal SaaS products.
+
+It encapsulates data access logic and provides a unified interface for search and data retrieval, enabling consistent behavior across products.
+
+- Serves multiple products through a shared backend layer  
+- Handles complex query logic and data orchestration  
+- Designed for high availability and production stability  
+
+## Tech Stack
+
+- **API Layer**: Go (Gin)  
+- **Search Engine**: Elasticsearch  
+- **Databases**: MySQL, MongoDB, Neo4j  
+- **Cache & Storage**: Redis (caching), Alibaba Cloud OSS (snapshot / storage)  
+- **Infrastructure**: Docker, Docker Compose, Nginx  
+- **Environment**: Alibaba Cloud (VPC, internal networking)  
+
+## My Role
+
+- Took over the entire backend system following a rapid handover
+- Independently handled feature development, system stability, and production operations  
+- Managed search infrastructure, databases, and deployment workflows  
+- Collaborated with additional engineers later while remaining primary owner of production systems  
+
+## System Architecture
+
+### Request Flow
+```
+Client (Browser)
+↓
+Load Balancer (Nginx)
+↓
+Frontend Service (Django + uWSGI)
+↓
+DAL Load Balancer (Nginx)
+↓
+DAL Instances (Go + Gin, Docker)
+↓
+Datastores (Elasticsearch / MySQL / MongoDB / Neo4j)
+```
+### Key Characteristics
+
+- **Shared backend layer**
+  - Multiple products rely on the same DAL service  
+
+- **High availability**
+  - Frontend and DAL both deployed with multiple instances  
+  - Load balanced via Nginx  
+
+- **Internal-only service**
+  - DAL is not publicly exposed  
+  - Access restricted via internal network (VPC)  
+
+## Key Contributions
+
+- Led design and implementation of advanced search capabilities  
+- Solved long-standing Elasticsearch cluster stability issues  
+- Planned and executed Elasticsearch upgrades and scaling  
+- Maintained a multi-database production environment  
+- Ensured system reliability with no major downtime incidents  
+
+---
+
+## Case Study: Proximity Search
+
+### Context
+
+Users (primarily IPO lawyers) needed to identify specific events across large volumes of financial and legal documents.
+
+These events often involve relationships between entities and actions, such as acquisitions or legal incidents.
+
+Traditional keyword search produced noisy results, requiring manual verification.
+
+### Solution
+
+Independently explored, designed, and implemented proximity search feature to enable users to define relationships between multiple terms.
+
+**Key capabilities**:
+
+- Multiple terms (≥2)  
+- Configurable constraints:
+  - word distance (max gaps)  
+  - scope (sentence / paragraph)  
+  - ordering (in sequence or not)  
+
+**Example**: 
+
+> Find documents where "Company A", "acquires", and "Company B" appear within 5 words, in order
+
+### Technical Design
+
+Built on Elasticsearch `intervals query`:
+
+- Each term modeled as an interval query  
+- Phrase terms handled via nested constraints (`max_gaps = 0`, `ordered = true`)  
+- Composed into a flexible query structure supporting complex conditions  
+
+### Challenges & Trade-offs
+
+#### Highlighting & Snippet Relevance
+
+Elasticsearch does not support proximity-aware highlighting.
+
+- Used `match_phrase` queries as a practical approximation for highlighting  
+
+- Designed a custom multi-stage snippet ranking system to improve result relevance:
+
+  - Proximity-aware optimization (for proximity search):
+    - prioritized snippets covering all proximity terms  
+    - grouped partial matches across adjacent snippets  
+    - ranked results based on proximity tightness and completeness  
+
+  - General relevance ranking (applied to all searches):
+    - boosted snippets with higher term coverage  
+    - prioritized diversity of unique tokens  
+    - reduced redundancy by promoting snippets introducing new information  
+
+#### Performance & System Impact
+
+Proximity queries introduced significant computational overhead.
+
+- Upgraded Elasticsearch from earlier 7.x versions to 7.17 to support required query capabilities  
+- Identified performance limitations under increased query complexity  
+- Scaled infrastructure:
+  - added cluster nodes  
+  - upgraded CPU and memory resources  
+- Later upgraded to Elasticsearch 8 as part of system modernization  
+
+### Outcome
+
+- Enabled context-aware search for complex entity relationships  
+- Significantly improved search precision for legal document workflows  
+- Reduced effort for users to locate relevant events  
+- Successfully integrated into Advanced Search and Bookmark Search  
+
+---
+
+## Case Study: Elasticsearch Stability Issue
+
+### Problem
+
+Elasticsearch indices would intermittently become read-only due to disk watermark limits, leading to stale or outdated search results.
+
+This issue was not caused by static data growth alone. The system continuously ingested new data and created or deleted indices, triggering frequent shard rebalancing within the cluster.
+
+During peak periods, the cluster was constantly relocating shards, which introduced two major problems:
+
+- degraded search performance due to heavy disk I/O from shard movement  
+- increased risk of nodes exceeding disk watermark thresholds during or after relocation, causing indices to be marked as read-only  
+
+### Investigation
+
+Through analyzing cluster behavior and Elasticsearch documentation, it became clear that the issue was rooted in how shard balancing operates:
+
+- Elasticsearch primarily balances **shard count**, not actual disk usage  
+- large shards could be relocated without sufficient consideration of remaining disk capacity  
+- shard sizes had grown significantly over time, making relocation both expensive and risky  
+
+This explained why the cluster appeared busy rebalancing, yet still resulted in uneven disk pressure and repeated read-only incidents.
+
+Further research into best practices revealed that oversized shards (e.g., exceeding ~50GB) significantly increase the cost and risk of rebalancing operations.
+
+### Solution
+
+The resolution required both short-term mitigation and long-term structural improvements.
+
+**Short-term (stabilization):**
+
+- applied manual fixes to unblock read-only indices and restore write capability  
+- reduced immediate operational impact on users  
+
+**Long-term (structural fix):**
+
+- redesigned shard sizing strategy based on Elasticsearch best practices  
+- performed index restructuring operations to reduce shard sizes (e.g., shrink and reorganization)  
+- improved shard distribution to better align with node capacity and disk limits  
+
+Because these changes involved modifying existing indices and data layout, the process required careful planning and execution.
+
+All operations were performed during off-peak hours with controlled sequencing to ensure:
+
+- zero downtime for end users  
+- minimal impact on ongoing search and indexing  
+- stable cluster behavior throughout the transition  
+
+### Outcome
+
+- Eliminated recurring read-only incidents caused by disk watermark breaches  
+- Reduced inefficient shard relocation caused by oversized shards
+- Improved overall cluster stability under dynamic data growth
+- Improved search performance by lowering disk I/O pressure  
