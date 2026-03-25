@@ -56,6 +56,17 @@
   --tw-prose-invert-pre-bg: oklch(0.28 0.01 50 / 0.5);
 }
 
+@utility prose {
+  blockquote {    
+    p {
+      &:first-of-type::before,
+      &:last-of-type::after {
+        content: none;
+      }
+    }
+  }
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
