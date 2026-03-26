@@ -13,24 +13,12 @@ Existing tools were rigid and tightly coupled to specific data formats, making i
 
 ## Tech Stack
 
-**Frontend**: Vue / SCSS  
-
-**Backend**: Flask (RESTful API server)
-
-**Data & Storage**
-- MongoDB (annotation data & serving layer)  
-- Elasticsearch (search capabilities)  
-- MySQL (upstream data source)  
-- Alibaba Cloud OSS (document storage)
-
-**Data Pipeline**: Kafka (document update ingestion and synchronization)
-
-**Document Processing**: PDF.js (PDF rendering and interaction)
-
-**Deployment**
-- System-level services for process management and automatic restart  
-- Frontend served as static assets via `serve`  
-- Backend API and Kafka consumers managed as independent services  
+- **Frontend**: Vue, SCSS  
+- **Backend**: Flask (RESTful API server)
+- **Data & Storage**: MongoDB, Elasticsearch, MySQL, Alibaba Cloud OSS
+- **Data Pipeline**: Kafka (document update ingestion and synchronization)
+- **Document Processing**: PDF.js (PDF rendering and interaction)
+- **Deployment**: System services (managing the frontend server, API server, and Kafka consumers)
 
 ## Solution
 
