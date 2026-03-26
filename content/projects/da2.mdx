@@ -1,0 +1,96 @@
+---
+title: "Document Annotation Platform"
+description: "A full-stack, template-driven document annotation platform with real-time data pipelines and internal tooling for scalable data operations."
+tech: ["Vue", "Flask", "MongoDB", "MySQL", "Elasticsearch", "Kafka", "PDF.js"]
+priority: 105
+---
+
+## Overview
+
+Built a configurable internal platform to support document annotation and data extraction workflows across multiple document types.
+
+Existing tools were rigid and tightly coupled to specific data formats, making it difficult to scale or adapt to new document structures. The platform was designed to provide a flexible, template-driven approach that enables non-engineering roles to define extraction logic while maintaining a consistent and efficient annotation experience.
+
+## Tech Stack
+
+**Frontend**: Vue / SCSS  
+
+**Backend**: Flask (RESTful API server)
+
+**Data & Storage**
+- MongoDB (annotation data & serving layer)  
+- Elasticsearch (search capabilities)  
+- MySQL (upstream data source)  
+- Alibaba Cloud OSS (document storage)
+
+**Data Pipeline**: Kafka (document update ingestion and synchronization)
+
+**Document Processing**: PDF.js (PDF rendering and interaction)
+
+**Deployment**
+- System-level services for process management and automatic restart  
+- Frontend served as static assets via `serve`  
+- Backend API and Kafka consumers managed as independent services  
+
+## Solution
+
+Led the engineering design and end-to-end development of a full-stack document annotation platform, in collaboration with product and design stakeholders.
+
+### Template-Driven Architecture
+
+Designed a configuration-driven system to decouple annotation logic from application code.
+
+- Transformed complex templates provided by data engineers into a unified JSON schema  
+- Enabled front-end to dynamically render project structures, attributes, and annotation rules  
+- Eliminated hardcoded logic, allowing new document types to be supported with minimal engineering effort  
+
+### Interactive Document Annotation
+
+Implemented a rich annotation interface supporting efficient navigation, flexible search, and precise data labeling.
+
+- Built a custom HTML document viewer and a PDF viewer based on `PDF.js` to support multi-format documents  
+- Unified rendering logic to enable consistent search and highlighting across document types  
+- Implemented flexible search capabilities (e.g. regex-based matching) to improve content discoverability  
+- Developed snippet positioning and navigation, enabling users to locate, jump to, and highlight content within documents  
+
+### Data Pipeline & System Integration
+
+Established a decoupled data layer to ensure scalability and system independence.
+
+- Designed a MongoDB-based storage layer to serve annotation workflows without directly querying upstream systems  
+- Implemented Kafka consumers to ingest and synchronize document data asynchronously  
+- Built automated document update runners to keep the platform data fresh and consistent  
+- Designed reconciliation logic to handle complex data mutations (e.g. deletion, merging of entities)  
+- Implemented incremental synchronization based on timestamps to ensure data consistency across systems  
+
+### Operational Tooling & Data Reliability
+
+Developed internal tooling to support data maintenance and recovery.
+
+- Designed a data repair mechanism to handle batch updates and corrections safely  
+- Enabled execution of reusable repair scripts to replace error-prone manual operations  
+- Maintained task-level traceability to support debugging and data consistency  
+
+## Key Technical Decisions
+
+- **Template-driven vs hardcoded logic**  
+  Adopted a configuration-based approach to improve scalability and reduce engineering overhead  
+
+- **Decoupled data layer**  
+  Introduced an intermediate storage layer to reduce dependency on upstream systems and improve performance  
+
+- **Asynchronous data ingestion (Kafka)**  
+  Ensured timely updates without impacting system responsiveness  
+
+- **Unified rendering strategy**  
+  Standardized document processing to enable consistent search and highlighting capabilities  
+
+- **System operability as a first-class concern**  
+  Built internal repair and maintenance tooling to ensure long-term reliability and ease of operation  
+
+## Outcome
+
+- Enabled scalable annotation workflows across multiple document types  
+- Reduced engineering effort required to onboard new data extraction projects  
+- Improved annotation efficiency and user experience through interactive tooling  
+- Established a reliable internal platform with built-in data maintenance capabilities  
