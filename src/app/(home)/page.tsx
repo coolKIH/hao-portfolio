@@ -1,37 +1,45 @@
 export default function Home() {
   return (
     <div className="space-y-10">
+      {/* Hero */}
       <section>
         <h1 className="text-3xl font-semibold text-foreground">
-          你好，我是 Hao。
+          Hi, I&rsquo;m Hao.
         </h1>
         <p className="text-xl text-muted-foreground">
-          一名正在回到一线的开发者，偏前端，关注产品与体验。
+          I build search-driven products, bridging complex data systems with intuitive user experiences.
         </p>
       </section>
 
+      {/* Intro */}
       <section className="space-y-3 text-foreground">
-        <p>我曾从事全栈开发，目前正在系统性地重新打磨前端与现代 Web 技术。</p>
-        <p>这里是我记录学习、技术思考和生活感悟的地方。</p>
+        <p>
+          I design and build systems that make complex data usable.
+        </p>
+        <p>
+          From large-scale search infrastructure to modern web interfaces, I work on turning backend complexity into clear and efficient user experiences.
+        </p>
       </section>
 
+      {/* Focus */}
       <section>
         <h2 className="text-lg font-medium text-foreground mb-2">
-          我关注的方向
+          What I focus on
         </h2>
         <ul className="list-disc pl-5 text-foreground space-y-1">
-          <li>前端工程与 Web 产品体验</li>
-          <li>React / Next.js / TypeScript</li>
-          <li>可维护、可演进的代码结构</li>
+          <li>Search systems and data-intensive applications</li>
+          <li>Full-stack product development (React / Next.js / TypeScript)</li>
+          <li>Performance, usability, and maintainable architectures</li>
         </ul>
       </section>
 
+      {/* Current */}
       <section>
         <h2 className="text-lg font-medium text-foreground mb-2">
-          当前在做什么
+          Currently
         </h2>
         <p className="text-foreground">
-          正在构建个人网站与博客，并逐步寻找远程或国际化的工作机会。
+          Building my personal site and writing about engineering and product thinking. Exploring opportunities with product-focused and international teams.
         </p>
       </section>
     </div>
