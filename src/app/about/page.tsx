@@ -1,41 +1,134 @@
 import type { Metadata } from 'next'
+import { Mail, Globe } from 'lucide-react'
+import { SiGithub, SiX } from 'react-icons/si'
 
 export const metadata: Metadata = {
     title: 'About',
 }
 
 export default function About() {
-
     return (
-        <div className="space-y-4">
-            <h1 className="text-3xl font-semibold text-foreground">
-                关于我
-            </h1>
-            <p className="text-xl text-foreground/80">
-                我是 Hao，一名偏前端的全栈开发者，喜欢学习新技术，创造激动人心的产品。
-            </p>
-            <section className="mt-16">
-                <h2 className="font-semibold uppercase text-muted-foreground mb-3">
-                    联系方式
+        <div className="space-y-8">
+            <h1 className="text-3xl font-semibold text-foreground">About</h1>
+
+            <div className="prose prose-lg text-foreground max-w-none">
+                {/* Intro */}
+                <section className="space-y-3">
+                    <p>
+                        I&rsquo;m Hao, a full-stack engineer with a background in large-scale search systems.
+                    </p>
+                    <p>
+                        Currently building product-oriented web applications that make complex systems intuitive to use.
+                    </p>
+                </section>
+
+                {/* Experience */}
+                <section>
+                    <p>
+                        Over the past 6 years, I&rsquo;ve worked on financial data platforms, building systems that span from document pipelines and search infrastructure to user-facing interfaces.
+                    </p>
+                    <p>
+                        My work includes designing and operating Elasticsearch clusters, as well as building tools that help users explore and interact with complex data.
+                    </p>
+                    <p>
+                        Recently, I&rsquo;ve been shifting towards product engineering — thinking not only about how systems work, but also how they feel and how they are used in practice.
+                    </p>
+                </section>
+
+                {/* How I think */}
+                <section>
+                    <h2 className="text-xl font-semibold uppercase tracking-wide text-muted-foreground mb-4">
+                        How I think
+                    </h2>
+                    <ul className="space-y-3">
+                        <li>I think in systems — understanding how different parts connect and where complexity comes from.</li>
+                        <li>I care about reducing unnecessary complexity and making things more intuitive.</li>
+                        <li>I approach frontend with a backend mindset — considering data, constraints, and trade-offs.</li>
+                        <li>I value clarity, performance, and usefulness over visual noise.</li>
+                    </ul>
+                </section>
+            </div>
+
+            {/* Divider + Contact Section */}
+            <hr className="border-border my-12" />
+
+            <section className="space-y-4">
+                {/* Section Title */}
+                <h2 className="font-medium uppercase tracking-wide text-muted-foreground">
+                    Contact
                 </h2>
-                <address className="not-italic space-y-3 text-lg text-foreground">
-                    <div className="space-x-2">
-                        <span>📧 主要邮箱:</span>
-                        <a href="mailto:haoyellow.dev@gmail.com"
-                            className="text-foreground hover:text-foreground transition-colors underline decoration-stone-300 dark:decoration-stone-500 hover:decoration-inherit underline-offset-4"
-                        >haoyellow.dev@gmail.com</a>
+
+                <div className="space-y-4 text-base">
+                    {/* Emails */}
+                    <div className="flex items-start gap-3">
+                        <Mail
+                            size={18}
+                            className="mt-0.5 text-muted-foreground shrink-0"
+                            aria-hidden="true"
+                        />
+
+                        <div className="space-y-2 flex-1">
+                            <a
+                                href="mailto:haoyellow.dev@gmail.com"
+                                className="block hover:underline underline-offset-4"
+                            >
+                                haoyellow.dev@gmail.com <span className="text-muted-foreground text-sm">(primary)</span>
+                            </a>
+
+                            <a
+                                href="mailto:haoyellow.dev@icloud.com"
+                                className="block hover:underline underline-offset-4"
+                            >
+                                haoyellow.dev@icloud.com <span className="text-muted-foreground text-sm">(backup)</span>
+                            </a>
+                        </div>
                     </div>
-                    <div className="space-x-2">
-                        <span>☁️ 备用邮箱:</span>
-                        <a href="mailto:haoyellow.dev@icloud.com"
-                            className="text-foreground hover:text-foreground transition-colors underline decoration-stone-300 dark:decoration-stone-500 hover:decoration-inherit underline-offset-4"
-                        >haoyellow.dev@icloud.com</a>
+
+                    {/* GitHub */}
+                    <div className="flex items-center gap-3">
+                        <SiGithub
+                            size={18}
+                            className="text-muted-foreground shrink-0"
+                            aria-hidden="true"
+                        />
+                        <a
+                            href="https://github.com/coolKIH"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline underline-offset-4"
+                        >
+                            github.com/coolKIH
+                        </a>
                     </div>
-                    <div>
-                        🌍 位置: 目前居住于中国广东省。开放远程工作意愿。
+
+                    {/* X / Twitter */}
+                    <div className="flex items-center gap-3">
+                        <SiX
+                            size={18}
+                            className="text-muted-foreground shrink-0"
+                            aria-hidden="true"
+                        />
+                        <a
+                            href="https://x.com/haoh_dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline underline-offset-4"
+                        >
+                            @haoh_dev
+                        </a>
                     </div>
-                </address>
+
+                    {/* Location */}
+                    <div className="flex items-center gap-3 text-foreground/70">
+                        <Globe
+                            size={18}
+                            className="shrink-0"
+                            aria-hidden="true"
+                        />
+                        Based in China · UTC+8 timezone
+                    </div>
+                </div>
             </section>
         </div>
-    );
+    )
 }
