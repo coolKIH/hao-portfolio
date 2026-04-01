@@ -12,7 +12,7 @@ export default function Home() {
       </section>
 
       {/* Intro */}
-      <section className="space-y-3 text-foreground">
+      <section className="space-y-3 text-lg text-foreground">
         <p>
           I design and build systems that make complex data usable.
         </p>
