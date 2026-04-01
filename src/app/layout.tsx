@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Container } from "@/components/container";
-import { Analytics } from "@vercel/analytics/next"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "@/components/theme-provider";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -20,10 +20,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Hao's Portfolio",
-    template: "%s | Hao's Portfolio",
+    default: "Hao Huang — Product Engineer",
+    template: "%s | Hao Huang",
   },
-  description: "This is Hao's personal portfolio website.",
+  description: "Full-stack engineer specializing in search systems and intuitive product experiences. Building elegant solutions that bridge complex data with great user interfaces.",
+  keywords: ["Hao Huang", "product engineer", "full-stack", "search systems", "Elasticsearch", "Next.js", "React"],
+  authors: [{ name: "Hao Huang" }],
+  openGraph: {
+    title: "Hao Huang — Product Engineer",
+    description: "Full-stack engineer focused on search systems and product-oriented development.",
+    images: [{ url: "/og.jpg" }],
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full" suppressHydrationWarning>
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-full`}
       >
@@ -42,7 +49,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-
           <header className="py-4">
             <Container>
               <Nav />
@@ -54,10 +60,12 @@ export default function RootLayout({
           </main>
 
           <footer className="py-12 text-center text-xs tracking-widest text-muted-foreground uppercase">
-            © {new Date().getFullYear()} Hao
+            © {new Date().getFullYear()} Hao Huang
           </footer>
 
-          <div aria-hidden="true"
+          {/* Decorative Four-leaf Clover */}
+          <div
+            aria-hidden="true"
             className={cn(`
               absolute rotate-[-25deg] opacity-5 hover:opacity-10
               transition-all duration-700 ease-out
@@ -69,7 +77,8 @@ export default function RootLayout({
 
               animate-float animate-paused
               hover:animate-running
-  `)}>
+            `)}
+          >
             <Image
               src="/Four-leaf_clover.svg"
               alt="Four leaf clover decoration"
