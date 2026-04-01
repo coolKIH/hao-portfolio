@@ -4,7 +4,7 @@ export default function Home() {
       {/* Hero */}
       <section>
         <h1 className="text-3xl font-semibold text-foreground">
-          Hi, I&rsquo;m Hao.
+          Hi, I&rsquo;m Hao Huang.
         </h1>
         <p className="text-xl text-muted-foreground">
           I build search-driven products, bridging complex data systems with intuitive user experiences.
@@ -26,19 +26,19 @@ export default function Home() {
         <h2 className="text-lg font-medium text-foreground mb-2">
           What I focus on
         </h2>
-        <ul className="list-disc pl-5 text-foreground space-y-1">
+        <ul className="list-disc pl-5 text-lg text-foreground space-y-1">
           <li>Search systems and data-intensive applications</li>
           <li>Full-stack product development (React / Next.js / TypeScript)</li>
           <li>Performance, usability, and maintainable architectures</li>
         </ul>
       </section>
 
-      {/* Current */}
+      {/* Currently */}
       <section>
         <h2 className="text-lg font-medium text-foreground mb-2">
           Currently
         </h2>
-        <p className="text-foreground">
+        <p className="text-lg text-foreground">
           Building my personal site and writing about engineering and product thinking. Exploring opportunities with product-focused and international teams.
         </p>
       </section>
