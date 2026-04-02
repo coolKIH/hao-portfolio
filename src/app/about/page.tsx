@@ -15,7 +15,7 @@ export default function About() {
                 {/* Intro */}
                 <section className="space-y-3">
                     <p>
-                        I&rsquo;m Hao, a full-stack engineer with a background in large-scale search systems.
+                        <strong>I&rsquo;m Hao Huang</strong>, a full-stack engineer with a background in large-scale search systems.
                     </p>
                     <p>
                         Currently building product-oriented web applications that make complex systems intuitive to use.
