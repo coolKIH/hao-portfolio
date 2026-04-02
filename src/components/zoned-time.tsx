@@ -6,10 +6,10 @@ interface ZonedTimeProps {
 export default function ZonedTime({ dateStr, mode = 'date' }: ZonedTimeProps) {
     const dateObj = new Date(dateStr);
 
-    // Check if the original string contains time information (T or :)
+    // Check if the original string contains time information
     const hasTime = dateStr.includes('T') || dateStr.includes(':');
 
-    // Base configuration: always include year, month, and day
+    // Base configuration for Shanghai timezone
     const baseOptions: Intl.DateTimeFormatOptions = {
         timeZone: 'Asia/Shanghai',
         year: 'numeric',
@@ -17,8 +17,8 @@ export default function ZonedTime({ dateStr, mode = 'date' }: ZonedTimeProps) {
         day: 'numeric',
     };
 
-    // 1. Display value: Determined by the 'mode' prop and availability of time data
-    const displayValue = dateObj.toLocaleDateString('zh-CN', {
+    // Display value (what user sees)
+    const displayValue = dateObj.toLocaleDateString('en-US', {
         ...baseOptions,
         ...(mode === 'datetime' && hasTime && {
             hour: '2-digit',
@@ -27,8 +27,8 @@ export default function ZonedTime({ dateStr, mode = 'date' }: ZonedTimeProps) {
         }),
     });
 
-    // 2. Title attribute: Always show maximum precision available from the source
-    const titleValue = dateObj.toLocaleDateString('zh-CN', {
+    // Title attribute (shown on hover) - always shows full precision
+    const titleValue = dateObj.toLocaleDateString('en-US', {
         ...baseOptions,
         ...(hasTime && {
             hour: '2-digit',
