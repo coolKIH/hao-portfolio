@@ -17,7 +17,15 @@ export async function generateMetadata({ params }: {
         return { title: "Project Not Found" };
     }
 
-    return { title: project.metadata.title };
+    return {
+        title: project.metadata.title,
+        description: project.metadata.description,
+        openGraph: {
+            title: project.metadata.title,
+            description: project.metadata.description,
+            images: [{ url: "/og.jpg" }],
+        },
+    };
 }
 
 export function generateStaticParams() {
