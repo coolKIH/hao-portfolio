@@ -39,7 +39,7 @@ export default function Home() {
           Currently
         </h2>
         <p className="text-lg text-foreground">
-          Building my personal site and writing about engineering and product thinking. Exploring opportunities with product-focused and international teams.
+          Building this personal site while reflecting on my past experiences. Actively seeking full-time opportunities in product engineering and full-stack development.
         </p>
       </section>
     </div>
