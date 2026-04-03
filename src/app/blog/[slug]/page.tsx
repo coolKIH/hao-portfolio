@@ -16,7 +16,15 @@ export async function generateMetadata({ params }: {
         return { title: "Post Not Found" };
     }
 
-    return { title: post.metadata.title };
+    return {
+        title: post.metadata.title,
+        description: post.metadata.description,
+        openGraph: {
+            title: post.metadata.title,
+            description: post.metadata.description,
+            images: [{ url: "/og.jpg" }],
+        },
+    };
 }
 
 export function generateStaticParams() {
