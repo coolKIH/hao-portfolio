@@ -1,9 +1,7 @@
 import { getProjectBySlug, getProjects } from "@/lib/vault";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from 'next';
-import { cn } from "@/lib/utils";
-import { mdxComponents } from "@/lib/mdx-components";
+import MdxArticle from "@/components/mdx-article";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 
@@ -113,16 +111,7 @@ export default async function ProjectPage({ params }: {
                 )}
             </header>
             {hasContent && (
-                <article className={cn(
-                    "prose dark:prose-invert prose-stone max-w-none",
-                    "[&_code::before]:content-none [&_code::after]:content-none",
-                    "[&_:not(pre)>code]:bg-stone-200/50",
-                    "dark:[&_:not(pre)>code]:bg-white/10",
-                    "[&_:not(pre)>code]:rounded-md [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5",
-                    "dark:[&_:not(pre)>code]:text-white/90 [&_:not(pre)>code]:font-medium"
-                )}>
-                    <MDXRemote source={project.content} components={mdxComponents} />
-                </article>
+                <MdxArticle source={project.content} />
             )}
         </div>
     );
