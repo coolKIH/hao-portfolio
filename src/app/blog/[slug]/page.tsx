@@ -25,6 +25,8 @@ export async function generateMetadata({ params }: {
     };
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
     const posts = getBlogPosts();
     return posts.map((post) => ({

@@ -26,6 +26,8 @@ export async function generateMetadata({ params }: {
     };
 }
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
     const projects = getProjects();
     return projects.map((project) => ({
