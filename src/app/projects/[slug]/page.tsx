@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: {
     const project = getProjectBySlug(slug);
 
     if (!project) {
-        return { title: "Project Not Found" };
+        return notFound();
     }
 
     return {
