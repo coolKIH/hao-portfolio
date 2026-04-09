@@ -12,7 +12,7 @@ export default function Projects() {
     return (
         <div className="space-y-4">
             <div className="mb-16">
-                <h1 className="text-3xl font-semibold text-foreground">Projects</h1>
+                <h1 className="text-4xl font-semibold text-foreground">Projects</h1>
                 <p className="mt-2 text-lg text-muted-foreground">
                     A selection of projects I&rsquo;ve built, ranging from complex data systems to personal passion projects.
                 </p>

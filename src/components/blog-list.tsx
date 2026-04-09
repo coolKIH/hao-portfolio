@@ -18,7 +18,7 @@ export function BlogList({
     return (
         <div className="space-y-4">
             <div className="mb-16">
-                <h1 className="text-3xl font-semibold text-foreground">Writing</h1>
+                <h1 className="text-4xl font-semibold text-foreground">Writing</h1>
                 <p className="mt-2 text-lg text-muted-foreground">
                     Notes and reflections on engineering and life.
                 </p>

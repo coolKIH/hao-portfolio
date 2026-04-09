@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function About() {
     return (
         <div className="space-y-12">
-            <h1 className="text-3xl font-semibold text-foreground">About</h1>
+            <h1 className="text-4xl font-semibold text-foreground">About</h1>
 
             {/* Intro */}
             <section className="space-y-5">
