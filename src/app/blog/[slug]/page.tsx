@@ -60,7 +60,7 @@ export default async function PostPage({ params }: {
                     )}
                 </div>
             </header>
-            <MdxArticle source={post.content} />
+            <MdxArticle source={post.content} className="max-w-prose" />
             {post.metadata.tags && (
                 <>
                     <hr className="w-full border-stone-300 dark:border-stone-600 my-10" />
