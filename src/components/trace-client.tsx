@@ -23,7 +23,9 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
     // Stores the reset callback provided by the form for the current transaction
     const onSuccessRef = useRef<(() => void) | null>(null);
 
-    const connect = useCallback(async () => {
+    const connect = useCallback<() => () => void>(() => {
+        let isCancelled = false;
+
         async function executeConnect() {
             if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
             if (ackTimeoutRef.current) clearTimeout(ackTimeoutRef.current);
@@ -44,6 +46,8 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
             } catch (err) {
                 console.warn('Wake-up ping failed:', err);
             }
+
+            if (isCancelled) return;
 
             const isDev = process.env.NODE_ENV === 'development';
             const accessKey = process.env.NEXT_PUBLIC_SOCKET_ACCESS_KEY;
@@ -108,10 +112,14 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
             };
         }
         executeConnect();
+
+        return () => {
+            isCancelled = true;
+        };
     }, []);
 
     useEffect(() => {
-        connect();
+        const cancelConnect = connect();
 
         const handleReactivate = () => {
             const socket = socketRef.current;
@@ -140,7 +148,11 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
         window.addEventListener('offline', handleOffline);
 
         return () => {
-            socketRef.current?.close();
+            cancelConnect();
+            if (socketRef.current) {
+                socketRef.current.onclose = null;
+                socketRef.current.close();
+            }
             if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
             if (ackTimeoutRef.current) clearTimeout(ackTimeoutRef.current);
             document.removeEventListener('visibilitychange', handleReactivate);
