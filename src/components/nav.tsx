@@ -12,8 +12,9 @@ export function Nav() {
     const links = [
         { href: "/", label: "HOME", matchRule: /^\/$/ },
         { href: "/about", label: "ABOUT", matchRule: /^\/about$/ },
-        { href: "/projects", label: "PROJECTS", matchRule: /^\/projects(\/[^/]+)?$/ },
+        { href: "/projects", label: "WORK", matchRule: /^\/projects(\/[^/]+)?$/ },
         { href: "/blog", label: "BLOG", matchRule: /^\/blog(\/[^/]+)?$/ },
+        { href: "/trace", label: "TRACE", matchRule: /^\/trace$/ },
     ];
 
     return (
