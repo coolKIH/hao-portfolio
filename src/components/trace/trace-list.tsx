@@ -29,7 +29,7 @@ export function TraceList({ messages }: { messages: Footprint[] }) {
                             <span className="w-1 h-1 rounded-full bg-muted-foreground" />
                             <ZonedTime dateStr={msg.created_at} mode="datetime" />
                         </div>
-                        <p className="text-foreground/80 leading-relaxed">
+                        <p className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
                             {msg.content}
                         </p>
                     </article>

@@ -124,7 +124,7 @@ export function TraceForm({ onSubmit, status, isSubmitting }: TraceFormProps) {
                                 charCount === MAX_LENGTH
                                     ? "text-red-500"
                                     : isNearLimit
-                                        ? "text-orange-500"
+                                        ? "text-orange-500 dark:text-orange-200"
                                         : "text-muted-foreground/60"
                             )}
                         >
