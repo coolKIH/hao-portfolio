@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import { pool } from "@/lib/db";
 import TraceClient from "@/components/trace/trace-client";
 
 // Ensure we fetch fresh data on every visit
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+    title: "Trace",
+    description: "Like a wild goose treading snow. Traces left by those who wandered through.",
+    openGraph: {
+        title: "Trace | Hao Huang",
+        description: "Like a wild goose treading snow. Traces left by those who wandered through.",
+    },
+};
 
 async function getInitialFootprints() {
     try {
