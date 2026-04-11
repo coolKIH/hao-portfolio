@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { TraceHeader } from './trace/trace-header';
-import { TraceForm } from './trace/trace-form';
-import { TraceList } from './trace/trace-list';
-import { Footprint, ConnectionStatus } from './trace/types';
+import { TraceHeader } from './trace-header';
+import { TraceForm } from './trace-form';
+import { TraceList } from './trace-list';
+import { Footprint, ConnectionStatus } from './types';
 
 export default function TraceClient({ initialData }: { initialData: Footprint[] }) {
     const [messages, setMessages] = useState<Footprint[]>(initialData);

@@ -1,5 +1,5 @@
 import { pool } from "@/lib/db";
-import TraceClient from "@/components/trace-client";
+import TraceClient from "@/components/trace/trace-client";
 
 // Ensure we fetch fresh data on every visit
 export const dynamic = "force-dynamic";
