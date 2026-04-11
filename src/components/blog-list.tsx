@@ -1,3 +1,5 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ZonedTime from "@/components/zoned-time";
 import type { PostMetadata } from "@/lib/vault";
@@ -54,25 +56,23 @@ export function BlogList({
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex items-center justify-center mt-12 gap-x-16">
+                <div className="flex items-center justify-center mt-12 gap-2">
                     {currentPage < totalPages && (
-                        <Link
-                            href={`/blog/page/${currentPage + 1}`}
-                            className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                            <span className="transition-transform group-hover:-translate-x-1">←</span>
-                            <span className="text-sm">Older Posts</span>
-                        </Link>
+                        <Button variant="ghost" size="sm" asChild className="gap-1.5 text-muted-foreground hover:text-foreground">
+                            <Link href={`/blog/page/${currentPage + 1}`}>
+                                <ChevronLeft className="h-4 w-4" />
+                                Older
+                            </Link>
+                        </Button>
                     )}
 
                     {currentPage > 1 && (
-                        <Link
-                            href={currentPage === 2 ? '/blog' : `/blog/page/${currentPage - 1}`}
-                            className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                            <span className="text-sm">Newer Posts</span>
-                            <span className="transition-transform group-hover:translate-x-1">→</span>
-                        </Link>
+                        <Button variant="ghost" size="sm" asChild className="gap-1.5 text-muted-foreground hover:text-foreground">
+                            <Link href={currentPage === 2 ? "/blog" : `/blog/page/${currentPage - 1}`}>
+                                Newer
+                                <ChevronRight className="h-4 w-4" />
+                            </Link>
+                        </Button>
                     )}
                 </div>
             )}
