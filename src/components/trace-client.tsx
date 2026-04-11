@@ -101,6 +101,7 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
             };
 
             socket.onclose = () => {
+                if (isCancelled) return;
                 setStatus('error');
                 setIsSubmitting(false);
                 reconnectTimerRef.current = setTimeout(executeConnect, 5000);
@@ -119,44 +120,52 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
     }, []);
 
     useEffect(() => {
-        const cancelConnect = connect();
+        // cancelConnectRef tracks the latest connect() cancel handle.
+        // Stored as a plain object (not useRef) since it only lives within this effect.
+        const cancelConnectRef = { current: connect() };
 
-        const handleReactivate = () => {
-            const socket = socketRef.current;
-            const isDead = !socket ||
-                socket.readyState === WebSocket.CLOSED ||
-                socket.readyState === WebSocket.CLOSING;
+        // Records when the tab was hidden, to avoid reconnecting on quick tab switches.
+        const hiddenAtRef = { current: 0 };
+        const ZOMBIE_THRESHOLD_MS = 30000;
 
-            // Check if we are actually able to connect
-            if (document.visibilityState === 'visible' && navigator.onLine) {
-                if (isDead) {
-                    // Explicitly set status to 'connecting' immediately 
-                    // so the UI reflects the attempt to fix the 'error' state.
-                    setStatus('connecting');
-                    connect();
-                } else if (socket.readyState === WebSocket.OPEN) {
-                    // If the socket was actually alive but the UI was stuck in error, sync it.
-                    setStatus('connected');
-                }
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden') {
+                hiddenAtRef.current = Date.now();
+                return;
             }
+            // Only reconnect if the tab was hidden long enough for the OS to have
+            // killed the TCP socket — short switches (alt-tab, minimize) are harmless.
+            const wasAwayLong = Date.now() - hiddenAtRef.current > ZOMBIE_THRESHOLD_MS;
+            if (navigator.onLine && wasAwayLong) {
+                setStatus('connecting');
+                cancelConnectRef.current();
+                cancelConnectRef.current = connect();
+            }
+        };
+
+        const handleOnline = () => {
+            // Coming back online always warrants a reconnect regardless of duration.
+            setStatus('connecting');
+            cancelConnectRef.current();
+            cancelConnectRef.current = connect();
         };
 
         const handleOffline = () => setStatus('error');
 
-        document.addEventListener('visibilitychange', handleReactivate);
-        window.addEventListener('online', handleReactivate);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('online', handleOnline);
         window.addEventListener('offline', handleOffline);
 
         return () => {
-            cancelConnect();
+            cancelConnectRef.current();
             if (socketRef.current) {
                 socketRef.current.onclose = null;
                 socketRef.current.close();
             }
             if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
             if (ackTimeoutRef.current) clearTimeout(ackTimeoutRef.current);
-            document.removeEventListener('visibilitychange', handleReactivate);
-            window.removeEventListener('online', handleReactivate);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('online', handleOnline);
             window.removeEventListener('offline', handleOffline);
         };
     }, [connect]);
