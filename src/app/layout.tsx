@@ -20,14 +20,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Hao Huang — Product Engineer",
+    default: "Hao Huang — Software Engineer",
     template: "%s | Hao Huang",
   },
   description: "Full-stack engineer specializing in search systems and intuitive product experiences. Building elegant solutions that bridge complex data with great user interfaces.",
-  keywords: ["Hao Huang", "product engineer", "full-stack", "search systems", "Elasticsearch", "Next.js", "React"],
+  keywords: ["Hao Huang", "Software engineer", "full-stack", "search systems", "Elasticsearch", "Next.js", "React"],
   authors: [{ name: "Hao Huang" }],
   openGraph: {
-    title: "Hao Huang — Product Engineer",
+    title: "Hao Huang — Software Engineer",
     description: "Full-stack engineer focused on search systems and product-oriented development.",
     images: [{ url: "/og.jpg" }],
   },
