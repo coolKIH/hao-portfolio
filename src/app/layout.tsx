@@ -29,7 +29,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hao Huang — Software Engineer",
     description: "Full-stack engineer focused on search systems and product-oriented development.",
-    images: [{ url: "/og.jpg" }],
   },
 };
 
