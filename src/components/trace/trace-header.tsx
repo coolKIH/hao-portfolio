@@ -6,7 +6,7 @@ export function TraceHeader({ status, error }: { status: ConnectionStatus; error
     return (
         <div className="mb-12">
             <h1 className="text-4xl font-semibold text-foreground tracking-tight">Footprints</h1>
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-baseline gap-2 mt-2">
                 <div
                     className="transition-all duration-1000"
                     title={status === 'connected' ? "Connected to the stream" : status === 'connecting' ? "Awakening..." : "Offline"}
@@ -21,8 +21,8 @@ export function TraceHeader({ status, error }: { status: ConnectionStatus; error
                         <WifiOff size={16} strokeWidth={1.5} className="text-red-500/80" />
                     )}
                 </div>
-                <p className="mt-2 text-lg text-muted-foreground/80 leading-relaxed max-w-2xl">
-                    A collection of moments from those who passed by.
+                <p className="text-lg text-muted-foreground" title="苏轼 — 人生到处知何似，应似飞鸿踏雪泥。">
+                    Like a wild goose treading snow
                 </p>
             </div>
             {error && (

@@ -84,7 +84,7 @@ export function TraceForm({ onSubmit, status, isSubmitting }: TraceFormProps) {
                     <Textarea
                         ref={textareaRef}
                         name="message"
-                        placeholder={isSubmitting ? "Posting your trace..." : "Share a thought, a greeting, or just a trace..."}
+                        placeholder={isSubmitting ? "Posting your trace..." : "Leave your trace..."}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onFocus={() => setIsFocused(true)}
