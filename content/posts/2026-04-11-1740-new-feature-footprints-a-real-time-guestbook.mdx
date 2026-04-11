@@ -1,0 +1,32 @@
+---
+title: "New Feature – Footprints, a Real-time Guestbook"
+date: "2026-04-11 17:40:14 +0800"
+location: "Home Office"
+tags: ["build log", "feature", "real-time", "websocket", "postgresql", "nodejs", "portfolio"]
+description: "Built a real-time guestbook for my portfolio where visitors can leave a trace — powered by a self-hosted WebSocket server on Render and a PostgreSQL backend."
+---
+
+Hello World,
+
+I just shipped a new feature to my portfolio: **Footprints** — a lightweight real-time guestbook where anyone passing by can leave a short message.
+
+The idea is simple. No accounts, no likes, no feeds. Just a name (optional) and a thought. Messages from the past 7 days are visible, then they quietly disappear.
+
+## How it works
+
+The frontend is a Next.js Server Component that SSR's the initial list of messages, then hands off to a client component that subscribes to a WebSocket stream for live updates. New messages from any visitor appear instantly for everyone on the page.
+
+The WebSocket server is built separately in Node.js and deployed on **Render**. It handles broadcasting new entries to all connected clients, writing to **PostgreSQL** first before ACKing back to the sender — simple, reliable, no surprises.
+
+## A few things I'm happy with
+
+- **Dedicated WebSocket server on Render** — rather than squeezing everything into Next.js API routes, the socket server lives and deploys independently. Cleaner separation, and it gives the real-time layer room to breathe
+- **Resilient reconnection without `setInterval`** — browser events and a nonce-based ACK timeout work together to detect both visible and silent failures, then reconnect automatically
+- **SSR + realtime handoff** — the server pre-fetches the last 7 days of messages at request time, then the client silently subscribes to the stream. No loading spinner on first paint
+- **Optimistic-free design** — the form only resets after the server ACKs the message, so you always know your trace actually landed
+- **Connection status indicator** — a small WiFi icon in the header reflects live connection state
+- **Auto-resizing textarea** — only expands when focused, collapses cleanly on cancel or submit
+
+It's a small feature, but it was fun to build end-to-end — from the socket server deployment to the SSR hydration handoff.
+
+If you're reading this, feel free to [leave a trace](/trace). 👋
