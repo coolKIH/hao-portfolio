@@ -29,33 +29,61 @@ This repository contains the source of a personal website that presents a blog a
 - [package.json](package.json) — scripts and dependency manifest
 
 ## Local development
+
 1. Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-2. Start development server (default: http://localhost:3000):
+2. Copy environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in `DATABASE_URL` and `NEXT_PUBLIC_SOCKET_ACCESS_KEY`. For Trace local dev, `NEXT_PUBLIC_SOCKET_ACCESS_KEY` must match `ACCESS_KEY` in [hao-portfolio-socket](https://github.com/coolKIH/hao-portfolio-socket).
+
+3. Start the development server (default: http://localhost:3000):
 
 ```bash
 pnpm dev
 ```
 
-3. Build and run production:
+4. Build and run production:
 
 ```bash
 pnpm build
 pnpm start
 ```
 
-4. Linting:
+5. Linting:
 
 ```bash
 pnpm lint
 ```
 
+### Trace (Footprints) local dev
+
+The `/trace` page uses SSR for the initial message list and WebSockets for live updates. Local development requires **both** repositories:
+
+| Repo | Command | URL |
+|---|---|---|
+| `hao-portfolio` (this repo) | `pnpm dev` | http://localhost:3000 |
+| `hao-portfolio-socket` | `pnpm dev` | ws://localhost:8080 |
+
+In development, the client connects to `ws://localhost:8080` with an `accessKey` query param. Production uses `wss://hao-portfolio-socket.onrender.com` with origin-based auth.
+
+Use a **separate dev database** for local work so test messages do not appear in production. Point both repos' `DATABASE_URL` at the same dev Postgres instance.
+
 ## Adding content
 - Add blog posts as MDX files under `content/posts/`.
+- Or scaffold a new post with a timestamped filename and frontmatter template:
+
+```bash
+pnpm new:post "Your Post Title"
+```
+
 - Recommended frontmatter fields: `title`, `date`, `description`, `tags` (and `location` if used).
 - For projects, add entries under `content/projects/` (or a directory you prefer) and use `src/components/project-card.tsx` to control display.
 
@@ -68,6 +96,11 @@ pnpm lint
 - `build` — builds the production output
 - `start` — starts the built app
 - `lint` — run ESLint
+- `new:post` — create a new blog post MDX file with frontmatter template
+
+## Related repositories
+
+- [hao-portfolio-socket](https://github.com/coolKIH/hao-portfolio-socket) — WebSocket server for the Trace (Footprints) guestbook, deployed on Render.com
 
 ## Notes & Maintenance
 - The project uses the App Router; pages live in `src/app` instead of the legacy `pages/` directory.
