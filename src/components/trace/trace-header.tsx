@@ -1,6 +1,11 @@
-import { Wifi, Loader, WifiOff } from "lucide-react";
+'use client';
+
+import { Wifi, WifiOff } from "lucide-react";
+import { LineSpinner } from "ldrs/react";
 import { ConnectionStatus } from "./types";
 import { cn } from "@/lib/utils";
+
+import "ldrs/react/LineSpinner.css";
 
 export function TraceHeader({ status, error }: { status: ConnectionStatus; error: string | null }) {
     return (
@@ -15,7 +20,9 @@ export function TraceHeader({ status, error }: { status: ConnectionStatus; error
                         <Wifi size={16} strokeWidth={1.5} className="text-stone-500 dark:text-stone-400 animate-in fade-in zoom-in duration-500" />
                     )}
                     {status === 'connecting' && (
-                        <Loader size={16} strokeWidth={1.5} className="text-stone-500 dark:text-stone-400 animate-pulse" />
+                        <span className="inline-flex text-stone-500 dark:text-stone-400">
+                            <LineSpinner size={16} color="currentColor" stroke={1.5} speed={1.2} />
+                        </span>
                     )}
                     {status === 'error' && (
                         <WifiOff size={16} strokeWidth={1.5} className="text-red-500/80" />
