@@ -97,21 +97,23 @@ When modifying Trace behavior, verify:
 
 **After completing a code change**, before closing the task, **ask the user**:
 
-> 这次改动是否需要同步更新相关文档（README、AGENTS.md、.env.example）？
+> 这次改动是否需要同步更新 README / AGENTS.md？如果涉及环境变量，是否也要更新 `.env.example`？
 
 Do not silently skip this — even a brief prompt is enough. If the user declines, move on.
 
-### Which doc to update
+### What to update
 
 | Change type | Update |
 |---|---|
-| New env variable | `.env.example` in affected repo(s) |
+| New env variable | `.env.example` in affected repo(s) — a **config template**, not prose docs |
 | Local dev / setup steps | `README.md` in affected repo(s) |
 | Agent workflow, commit habits, pitfalls | `AGENTS.md` |
 | New script or npm command | `README.md` + this file if agents should know |
-| Trace protocol, auth, or ports | Both READMEs + both `.env.example` if applicable |
+| Trace protocol, auth, or ports | Both READMEs; both `.env.example` if env vars changed |
 | New feature or page | `README.md` Key Features / layout section |
 | DB schema change | Socket `README.md` (SQL) + this file (pitfalls) |
+
+**Terminology:** treat `README.md` and `AGENTS.md` as documentation; treat `.env.example` as the committed env-var template developers copy to `.env` / `.env.local`.
 
 ### When docs likely need updating
 
@@ -144,7 +146,7 @@ git log -5 --oneline   # match existing commit message style
 - Check edited files for linter errors.
 - Confirm **no secrets** appear in the diff (`.env`, keys, connection strings).
 - If env vars were added, update `.env.example` in the affected repo(s).
-- **Ask the user** whether README / AGENTS.md should be updated for this change (see [Keeping documentation in sync](#keeping-documentation-in-sync)).
+- **Ask the user** whether README / AGENTS.md should be updated, and whether `.env.example` needs changes if env vars were touched (see [Keeping documentation in sync](#keeping-documentation-in-sync)).
 
 ### 3. Split commits when appropriate
 
