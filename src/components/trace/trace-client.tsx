@@ -37,21 +37,26 @@ export default function TraceClient({ initialData }: { initialData: Footprint[] 
 
             setStatus('connecting');
 
-            try {
-                // Wake-up call for cold-start environments (like Render free tier)
-                await fetch('https://hao-portfolio-socket.onrender.com/', {
-                    mode: 'no-cors',
-                    signal: AbortSignal.timeout(5000)
-                });
-            } catch (err) {
-                console.warn('Wake-up ping failed:', err);
+            const isDev = process.env.NODE_ENV === 'development';
+            const accessKey = process.env.NEXT_PUBLIC_SOCKET_ACCESS_KEY;
+
+            if (!isDev) {
+                try {
+                    // Wake-up call for cold-start environments (like Render free tier)
+                    await fetch('https://hao-portfolio-socket.onrender.com/', {
+                        mode: 'no-cors',
+                        signal: AbortSignal.timeout(5000)
+                    });
+                } catch (err) {
+                    console.warn('Wake-up ping failed:', err);
+                }
             }
 
             if (isCancelled) return;
 
-            const isDev = process.env.NODE_ENV === 'development';
-            const accessKey = process.env.NEXT_PUBLIC_SOCKET_ACCESS_KEY;
-            const socketUrl = `wss://hao-portfolio-socket.onrender.com${isDev ? `?accessKey=${accessKey}` : ''}`;
+            const socketUrl = isDev
+                ? `ws://localhost:8080?accessKey=${accessKey}`
+                : 'wss://hao-portfolio-socket.onrender.com';
 
             const socket = new WebSocket(socketUrl);
             socketRef.current = socket;
