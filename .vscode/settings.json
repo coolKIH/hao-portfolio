@@ -2,5 +2,6 @@
     "files.associations": {
         "*.css": "tailwindcss"
     },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "explorer.excludeGitIgnore": false
 }
