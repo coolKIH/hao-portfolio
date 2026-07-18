@@ -7,29 +7,35 @@ export default function Home() {
           Hi, I&rsquo;m Hao Huang.
         </h1>
         <p className="text-xl text-muted-foreground">
-          I build search-driven products, bridging complex data systems with intuitive user experiences.
+          This is Hao&rsquo;s World — a place to build, write, and figure out how
+          technology can better serve people.
         </p>
       </section>
 
       {/* Intro */}
       <section className="space-y-3 text-lg text-foreground">
         <p>
-          I design and build systems that make complex data usable.
+          By day I work on backend systems — not always the whole product, but
+          the foundation that has to hold. I care about delivering a kind of tech
+          warmth from underneath: backends that are firm and considerate, so
+          what people touch on top can feel steady and human.
         </p>
         <p>
-          From large-scale search infrastructure to modern web interfaces, I work on turning backend complexity into clear and efficient user experiences.
+          What draws me in is still evolution — systems and products that keep
+          growing into something better — and how people live with AI, not just
+          ask it, as these tools settle into everyday work and life.
         </p>
       </section>
 
-      {/* Focus */}
+      {/* Care */}
       <section>
         <h2 className="text-lg font-medium text-foreground mb-2">
-          What I focus on
+          What I care about
         </h2>
         <ul className="list-disc pl-5 text-lg text-foreground space-y-1">
-          <li>Search systems and data-intensive applications</li>
-          <li>Full-stack product development (React / Next.js / TypeScript)</li>
-          <li>Performance, usability, and maintainable architectures</li>
+          <li>Backend systems that are firm, stable, and considerate</li>
+          <li>Iteration — shipping, learning, and refining over time</li>
+          <li>How people live with AI, and interfaces that keep technology warm</li>
         </ul>
       </section>
 
@@ -39,7 +45,10 @@ export default function Home() {
           Currently
         </h2>
         <p className="text-lg text-foreground">
-          Continuously crafting. Building in public and open to product engineering roles where I can create things that matter.
+          Settled into backend work at the hardware–software boundary — infrastructure behind smart, connected products. What keeps me most engaged is still the user experience: making complex systems feel clear and usable.
+        </p>
+        <p className="text-lg text-foreground mt-3">
+          Meanwhile, I&rsquo;m turning this site into Hao&rsquo;s World — less résumé, more world. Trace is one corner of it. I&rsquo;m writing more build logs, experimenting with AI-assisted development, and slowly wiring things so I can ship from anywhere — even my phone — and share what I learn along the way.
         </p>
       </section>
     </div>
