@@ -40,7 +40,7 @@ export function BlogList({
                         </div>
 
                         <h2 className="mt-0.5 text-xl font-semibold text-foreground hover:underline">
-                            <Link href={`/blog/${post.slug}`}>
+                            <Link href={`/notes/${post.slug}`}>
                                 {post.title}
                             </Link>
                         </h2>
@@ -59,7 +59,7 @@ export function BlogList({
                 <div className="flex items-center justify-center mt-12 gap-2">
                     {currentPage < totalPages && (
                         <Button variant="ghost" size="sm" asChild className="gap-1.5 text-muted-foreground hover:text-foreground">
-                            <Link href={`/blog/page/${currentPage + 1}`}>
+                            <Link href={`/notes/page/${currentPage + 1}`}>
                                 <ChevronLeft className="h-4 w-4" />
                                 Older
                             </Link>
@@ -68,7 +68,7 @@ export function BlogList({
 
                     {currentPage > 1 && (
                         <Button variant="ghost" size="sm" asChild className="gap-1.5 text-muted-foreground hover:text-foreground">
-                            <Link href={currentPage === 2 ? "/blog" : `/blog/page/${currentPage - 1}`}>
+                            <Link href={currentPage === 2 ? "/notes" : `/notes/page/${currentPage - 1}`}>
                                 Newer
                                 <ChevronRight className="h-4 w-4" />
                             </Link>

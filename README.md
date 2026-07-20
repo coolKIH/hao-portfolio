@@ -1,12 +1,13 @@
 # hao-portfolio
 
-Hao's personal portfolio website — a Next.js (App Router) + MDX project.
+Hao's personal website (Hao's World) — a Next.js (App Router) + MDX project.
 
 ## Overview
-This repository contains the source of a personal website that presents a blog and project pages. The site uses Next.js (App Router), MDX for content, and Tailwind/PostCSS for styling.
+This repository contains the source of a personal website with Notes, Craft, About, and Trace. The site uses Next.js (App Router), MDX for content, and Tailwind/PostCSS for styling.
 
 ## Key Features
-- MDX-based blog and project content under the `content/` directory
+- MDX-based notes (`content/posts`) and craft entries (`content/projects`) under the `content/` directory
+- Public routes: `/notes`, `/craft`, `/about`, `/trace`
 - App Router pages and layouts in `src/app`
 - Reusable UI components in `src/components`
 - Simple static/media hosting under `public/media`
@@ -24,7 +25,7 @@ This repository contains the source of a personal website that presents a blog a
 - [src/app](src/app) — Next.js App Router pages and layouts
 - [src/components](src/components) — UI components (nav, blog-list, project-card, etc.)
 - [src/lib](src/lib) — MDX components and utility functions
-- [content](content) — MDX content (posts, projects)
+- [content](content) — MDX content (`posts` → Notes, `projects` → Craft)
 - [public/media](public/media) — static assets used by posts/pages
 - [package.json](package.json) — scripts and dependency manifest
 
@@ -77,7 +78,7 @@ In development, the client connects to `ws://localhost:8080` with an `accessKey`
 Use a **separate dev database** for local work so test messages do not appear in production. Point both repos' `DATABASE_URL` at the same dev Postgres instance.
 
 ## Adding content
-- Add blog posts as MDX files under `content/posts/`.
+- Add notes as MDX files under `content/posts/` (served at `/notes`).
 - Or scaffold a new post with a timestamped filename and frontmatter template:
 
 ```bash
@@ -85,7 +86,7 @@ pnpm new:post "Your Post Title"
 ```
 
 - Recommended frontmatter fields: `title`, `date`, `description`, `tags` (and `location` if used).
-- For projects, add entries under `content/projects/` (or a directory you prefer) and use `src/components/project-card.tsx` to control display.
+- For craft entries, add MDX under `content/projects/` (served at `/craft`) and use `src/components/project-card.tsx` to control display.
 
 ## Deployment
 - Recommended: Deploy on Vercel for native Next.js support.
@@ -96,7 +97,7 @@ pnpm new:post "Your Post Title"
 - `build` — builds the production output
 - `start` — starts the built app
 - `lint` — run ESLint
-- `new:post` — create a new blog post MDX file with frontmatter template
+- `new:post` — create a new notes post MDX file with frontmatter template
 
 ## Related repositories
 

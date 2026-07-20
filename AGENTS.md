@@ -12,14 +12,14 @@ Instructions for AI agents working in this multi-repository workspace.
 
 | Repo | Role | Stack | Deploy |
 |---|---|---|---|
-| `hao-portfolio` | Website (blog, projects, Trace UI) | Next.js 16, MDX, Tailwind, shadcn | Vercel |
+| `hao-portfolio` | Website (Notes, Craft, Trace UI) | Next.js 16, MDX, Tailwind, shadcn | Vercel |
 | `hao-portfolio-socket` | Trace WebSocket server | Node.js, ws, pg | Render |
 
 Open via `hao-portfolio.code-workspace` for both folders in one Cursor window.
 
 ## Local development workflow
 
-### Frontend only (blog, projects, about)
+### Frontend only (notes, craft, about)
 
 ```bash
 cd hao-portfolio
@@ -48,13 +48,13 @@ pnpm dev                     # http://localhost:3000
 - Restart `pnpm dev` after changing `NEXT_PUBLIC_*` env vars.
 - Package manager is **pnpm only** (`preinstall` enforces this).
 
-### New blog post
+### New notes post
 
 ```bash
 pnpm new:post "Post Title"
 ```
 
-Creates a timestamped MDX file under `content/posts/` with frontmatter template.
+Creates a timestamped MDX file under `content/posts/` with frontmatter template (served at `/notes`).
 
 ## Environment & secrets
 
@@ -78,8 +78,8 @@ Creates a timestamped MDX file under `content/posts/` with frontmatter template.
 | Trace SSR page | `src/app/trace/page.tsx` |
 | DB pool (frontend) | `src/lib/db.ts` |
 | Socket server | `hao-portfolio-socket/index.js` |
-| Blog content | `content/posts/*.mdx` |
-| Project content | `content/projects/*.mdx` |
+| Notes content (`/notes`) | `content/posts/*.mdx` |
+| Craft content (`/craft`) | `content/projects/*.mdx` |
 | New post scaffold | `scripts/new-post.mjs` |
 | Production origin allowlist | `ALLOWED_ORIGIN` in `index.js` |
 

@@ -12,7 +12,7 @@ export function ProjectCard({ title, description, tech, slug }: ProjectCardProps
         <div className="flex flex-col h-full border border-stone-200 dark:border-stone-700 rounded-xl p-6 space-y-4 hover:shadow-md transition-shadow">
 
             <div className="flex-1">
-                <Link href={`/projects/${slug}`}>
+                <Link href={`/craft/${slug}`}>
                     <h3 className="text-xl font-semibold text-foreground hover:underline mb-2 line-clamp-1"
                         title={title}>
                         {title}

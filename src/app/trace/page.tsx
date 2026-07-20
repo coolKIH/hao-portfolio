@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "Trace",
     description: "Like a wild goose treading snow. Traces left by those who wandered through.",
     openGraph: {
-        title: "Trace | Hao Huang",
+        title: "Trace | Hao's World",
         description: "Like a wild goose treading snow. Traces left by those who wandered through.",
     },
 };

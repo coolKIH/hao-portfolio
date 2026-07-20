@@ -6,7 +6,12 @@ import { notFound, redirect } from "next/navigation";
 const POSTS_PER_PAGE = 6;
 
 export const metadata: Metadata = {
-    title: 'Blog',
+    title: 'Notes',
+    description: 'Notes and reflections on engineering and life.',
+    openGraph: {
+        title: "Notes | Hao's World",
+        description: 'Notes and reflections on engineering and life.',
+    },
 }
 
 export function generateStaticParams() {
@@ -18,7 +23,7 @@ export function generateStaticParams() {
     }));
 }
 
-export default async function BlogPage({
+export default async function NotesPage({
     params,
 }: {
     params: Promise<{ page: string }>;
@@ -31,7 +36,7 @@ export default async function BlogPage({
     }
 
     if (pageNum === 1) {
-        redirect('/blog');
+        redirect('/notes');
     }
 
     const allPosts = getBlogPosts();

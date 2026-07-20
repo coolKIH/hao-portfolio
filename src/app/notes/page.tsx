@@ -5,10 +5,15 @@ import { BlogList } from "@/components/blog-list";
 const POSTS_PER_PAGE = 6;
 
 export const metadata: Metadata = {
-    title: 'Blog',
+    title: 'Notes',
+    description: 'Notes and reflections on engineering and life.',
+    openGraph: {
+        title: "Notes | Hao's World",
+        description: 'Notes and reflections on engineering and life.',
+    },
 }
 
-export default function Blog() {
+export default function Notes() {
     const allPosts = getBlogPosts();
     const posts = allPosts.slice(0, POSTS_PER_PAGE);
 

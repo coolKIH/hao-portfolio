@@ -4,7 +4,7 @@ export default function Home() {
       {/* Hero */}
       <section>
         <h1 className="text-3xl font-semibold text-foreground">
-          Hi, I&rsquo;m Hao Huang.
+          Hi, I&rsquo;m Hao.
         </h1>
         <p className="text-xl text-muted-foreground">
           This is Hao&rsquo;s World — a place to build, write, and figure out how

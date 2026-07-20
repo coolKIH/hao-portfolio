@@ -14,28 +14,24 @@ export default function About() {
             {/* Intro */}
             <section className="space-y-5">
                 <p className="text-lg text-foreground">
-                    I&rsquo;m <strong>Hao Huang</strong>, a full-stack engineer with a background in large-scale search systems.
+                    I&rsquo;m <strong>Hao Huang</strong>. I build backend systems that are meant to hold — firm underneath, considerate toward the people who rely on what sits on top.
                 </p>
                 <p className="text-lg text-foreground">
-                    I enjoy building product-oriented web applications that make complex systems intuitive to use.
+                    I care about evolution more than perfection: products and infrastructure that keep growing into something better, and technology that people can live with — including AI — not only ask questions of.
                 </p>
             </section>
 
-            {/* Experience */}
+            {/* Path */}
             <section className="space-y-6">
-                <h2 className="text-xl font-semibold text-foreground">Experience</h2>
+                <h2 className="text-xl font-semibold text-foreground">Path</h2>
 
                 <div className="space-y-6 text-lg text-foreground leading-relaxed">
                     <p>
-                        Over the past 6 years, I&rsquo;ve worked on financial data platforms, building systems that span from document pipelines and search infrastructure to user-facing interfaces.
+                        For years I worked on financial data platforms — document pipelines, search infrastructure, and the tools that help people explore complex information. That background still shapes how I think about systems.
                     </p>
 
                     <p>
-                        My work includes designing and operating Elasticsearch clusters, as well as building tools that help users explore and interact with complex data.
-                    </p>
-
-                    <p>
-                        Recently, I&rsquo;ve been shifting towards product engineering — thinking not only about how systems work, but also how they feel and how they are used in practice.
+                        These days my day job is backend work at the hardware–software boundary. The surface may change; what stays is the same instinct: make the foundation steady, so the experience can feel clear and human.
                     </p>
                 </div>
             </section>
@@ -46,10 +42,10 @@ export default function About() {
                     How I think
                 </h2>
                 <ul className="space-y-4 text-lg text-foreground leading-relaxed">
-                    <li>I think in systems — understanding how different parts connect and where complexity comes from.</li>
-                    <li>I care about reducing unnecessary complexity and making things more intuitive.</li>
-                    <li>I approach frontend with a backend mindset — considering data, constraints, and trade-offs.</li>
-                    <li>I value clarity, performance, and usefulness over visual noise.</li>
+                    <li>I think in systems — how parts connect, where complexity hides, what has to stay reliable.</li>
+                    <li>I prefer backends that are firm and considerate, not just clever.</li>
+                    <li>I care about evolution: shipping, learning, refining over time.</li>
+                    <li>I want technology — and AI — to settle into everyday life in ways that reduce friction, not add noise.</li>
                 </ul>
             </section>
 
@@ -63,34 +59,19 @@ export default function About() {
                 </h2>
 
                 <div className="space-y-4 text-base">
-                    {/* Emails */}
-                    <div className="flex items-start gap-3">
+                    {/* Email */}
+                    <div className="flex items-center gap-3">
                         <Mail
                             size={18}
-                            className="mt-0.5 text-foreground shrink-0"
+                            className="text-foreground shrink-0"
                             aria-hidden="true"
                         />
-                        <div className="space-y-2 flex-1">
-                            <div>
-                                <a
-                                    href="mailto:haoyellow.dev@gmail.com"
-                                    className="hover:underline underline-offset-4 text-foreground"
-                                >
-                                    haoyellow.dev@gmail.com
-                                </a>
-                                <span className="ml-2 text-muted-foreground text-sm">(primary)</span>
-                            </div>
-
-                            <div>
-                                <a
-                                    href="mailto:haoyellow.dev@icloud.com"
-                                    className="hover:underline underline-offset-4 text-foreground"
-                                >
-                                    haoyellow.dev@icloud.com
-                                </a>
-                                <span className="ml-2 text-muted-foreground text-sm">(backup)</span>
-                            </div>
-                        </div>
+                        <a
+                            href="mailto:haoyellow.dev@gmail.com"
+                            className="hover:underline underline-offset-4 text-foreground"
+                        >
+                            haoyellow.dev@gmail.com
+                        </a>
                     </div>
 
                     {/* GitHub */}
