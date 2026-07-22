@@ -2,6 +2,8 @@
 
 Hao's personal website (Hao's World) — a Next.js (App Router) + MDX project.
 
+**Production:** [https://hao-world.vercel.app](https://hao-world.vercel.app)
+
 ## Overview
 This repository contains the source of a personal website with Notes, Craft, About, and Trace. The site uses Next.js (App Router), MDX for content, and Tailwind/PostCSS for styling.
 

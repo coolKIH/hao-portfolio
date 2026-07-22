@@ -182,10 +182,10 @@ fix(trace): connect to local WebSocket server in development.
 
 ## Deployment notes
 
-- **hao-portfolio** → Vercel auto-builds on push to `main`.
+- **hao-portfolio** → Vercel auto-builds on push to `main` (production: `https://hao-world.vercel.app`).
 - **hao-portfolio-socket** → Render auto-deploys on push (if configured).
 - Production Trace uses origin-based auth; local dev uses `ACCESS_KEY`.
-- Changing `ALLOWED_ORIGIN` in socket requires a Render redeploy; update docs if the Vercel URL changes.
+- Changing `ALLOWED_ORIGIN` in socket requires a Render redeploy; update docs if the Vercel URL changes (current allowlist: `https://hao-world.vercel.app`).
 
 ## New machine setup
 
