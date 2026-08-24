@@ -1,6 +1,8 @@
 import { getBlogPosts } from "@/lib/vault";
 import type { Metadata } from 'next'
 import { BlogList } from "@/components/blog-list";
+import { isNotesUnlocked } from "@/lib/notes-auth";
+import { NotesUnlockStatus } from "@/components/notes-unlock-status";
 
 const POSTS_PER_PAGE = 6;
 
@@ -13,9 +15,15 @@ export const metadata: Metadata = {
     },
 }
 
-export default function Notes() {
-    const allPosts = getBlogPosts();
+export default async function Notes() {
+    const unlocked = await isNotesUnlocked();
+    const allPosts = getBlogPosts({ includeDrafts: unlocked });
     const posts = allPosts.slice(0, POSTS_PER_PAGE);
 
-    return <BlogList posts={posts} currentPage={1} totalPosts={allPosts.length} />;
+    return (
+        <>
+            <NotesUnlockStatus unlocked={unlocked} />
+            <BlogList posts={posts} currentPage={1} totalPosts={allPosts.length} />
+        </>
+    );
 }

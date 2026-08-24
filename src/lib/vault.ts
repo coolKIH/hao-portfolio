@@ -17,6 +17,8 @@ export interface PostMetadata {
     location?: string;
     description?: string;
     tags?: string[];
+    /** When true, post is hidden from the public site until notes are unlocked. */
+    draft?: boolean;
 }
 
 export interface ProjectMetadata {
@@ -41,7 +43,13 @@ export interface RawFrontmatter {
     priority?: number;
     liveUrl?: string;
     github?: string;
+    draft?: boolean;
 }
+
+export type GetBlogPostsOptions = {
+    /** Include posts with `draft: true`. Default false (public-only). */
+    includeDrafts?: boolean;
+};
 
 /**
  * Parses frontmatter data from MDX files into standardized PostMetadata.
@@ -57,6 +65,7 @@ function parsePostMetadata(fileName: string, rawData: RawFrontmatter): PostMetad
         location: rawData.location || undefined,
         description: rawData.description || undefined,
         tags: Array.isArray(rawData.tags) ? rawData.tags : (rawData.tags ? [rawData.tags] : []),
+        draft: rawData.draft === true,
     };
 }
 
@@ -75,24 +84,26 @@ function parseProjectMetadata(fileName: string, rawData: RawFrontmatter): Projec
 }
 
 /**
- * Retrieves all blog posts from the local content directory.
+ * Retrieves blog posts from the local content directory.
  * Posts are sorted by date in descending order (newest first).
- * @returns Array of post metadata sorted by date
+ * Drafts are excluded unless `includeDrafts` is true.
  */
-export function getBlogPosts(): PostMetadata[] {
+export function getBlogPosts(options: GetBlogPostsOptions = {}): PostMetadata[] {
+    const { includeDrafts = false } = options;
     const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.mdx'));
 
     const posts = files.map(file => {
         const content = fs.readFileSync(path.join(POSTS_DIR, file), 'utf-8');
         const { data } = matter(content);
         return parsePostMetadata(file, data);
-    });
+    }).filter(post => includeDrafts || !post.draft);
 
     return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 /**
- * Retrieves a single blog post by its slug.
+ * Retrieves a single blog post by its slug (including drafts).
+ * Callers must enforce draft visibility themselves.
  * @param slug - The post identifier (e.g., "my-first-post")
  * @returns Post metadata and content, or null if not found or invalid
  */

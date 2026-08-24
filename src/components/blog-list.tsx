@@ -37,6 +37,12 @@ export function BlogList({
                                     <span>{post.location}</span>
                                 </>
                             )}
+                            {post.draft && (
+                                <>
+                                    <span className="w-1 h-1 rounded-full bg-muted-foreground/80" />
+                                    <span className="text-xs tracking-wide uppercase">Draft</span>
+                                </>
+                            )}
                         </div>
 
                         <h2 className="mt-0.5 text-xl font-semibold text-foreground hover:underline">

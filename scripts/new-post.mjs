@@ -9,8 +9,12 @@ if (!fs.existsSync(POSTS_DIR)) {
   throw new Error('❌ posts directory not found. Run this from project root.');
 }
 
+const args = process.argv.slice(2);
+const draft = args.includes('--draft');
+const titleArgs = args.filter((arg) => arg !== '--draft');
+
 // 1. Get user input as the raw title
-const rawTitle = process.argv.slice(2).join(' ') || 'new-post';
+const rawTitle = titleArgs.join(' ') || 'new-post';
 
 // 2. Convert the raw title into a valid Slug
 const slug = rawTitle
@@ -39,13 +43,14 @@ const fileName = `${fileTimestamp}-${slug || 'untitled'}.mdx`;
 const filePath = path.join(POSTS_DIR, fileName);
 
 // 5. Prepare the template content
+const draftLine = draft ? 'draft: true\n' : '';
 const template = `---
 title: "${rawTitle}"
 date: "${timeStr} +0800"
 location: ""
 tags: []
 description: ""
----
+${draftLine}---
 
 How are you doing?
 `;
@@ -58,5 +63,8 @@ if (fs.existsSync(filePath)) {
   fs.writeFileSync(filePath, template);
   console.log(`✅ Created file: ${fileName}`);
   console.log(`📝 Titled: ${rawTitle}`);
+  if (draft) {
+    console.log('🔒 Marked as draft (private until you remove draft: true)');
+  }
   console.log(`Filepath: ${filePath}`);
 }

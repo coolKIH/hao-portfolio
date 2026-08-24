@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from 'next';
 import ZonedTime from "@/components/zoned-time";
 import MdxArticle from "@/components/mdx-article";
+import { isNotesUnlocked } from "@/lib/notes-auth";
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
@@ -10,13 +11,14 @@ export async function generateMetadata({ params }: {
     const { slug } = await params;
     const post = getPostBySlug(slug);
 
-    if (!post) {
-        return notFound();
+    if (!post || (post.metadata.draft && !(await isNotesUnlocked()))) {
+        return { title: 'Not Found', robots: { index: false, follow: false } };
     }
 
     return {
         title: post.metadata.title,
         description: post.metadata.description,
+        robots: post.metadata.draft ? { index: false, follow: false } : undefined,
         openGraph: {
             title: post.metadata.title,
             description: post.metadata.description,
@@ -24,9 +26,11 @@ export async function generateMetadata({ params }: {
     };
 }
 
-export const dynamicParams = false;
+// Allow on-demand render for draft slugs (not in generateStaticParams).
+export const dynamicParams = true;
 
 export function generateStaticParams() {
+    // Only public posts are pre-rendered — drafts must never ship as static HTML.
     const posts = getBlogPosts();
     return posts.map((post) => ({
         slug: post.slug,
@@ -43,6 +47,10 @@ export default async function PostPage({ params }: {
         notFound();
     }
 
+    if (post.metadata.draft && !(await isNotesUnlocked())) {
+        notFound();
+    }
+
     return (
         <div>
             <header className="mb-10">
@@ -55,6 +63,12 @@ export default async function PostPage({ params }: {
                         <>
                             <span className="w-1 h-1 rounded-full bg-muted-foreground/80" />
                             <span>{post.metadata.location}</span>
+                        </>
+                    )}
+                    {post.metadata.draft && (
+                        <>
+                            <span className="w-1 h-1 rounded-full bg-muted-foreground/80" />
+                            <span className="text-xs tracking-wide uppercase">Draft</span>
                         </>
                     )}
                 </div>

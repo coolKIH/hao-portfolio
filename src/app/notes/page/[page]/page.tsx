@@ -2,6 +2,8 @@ import { getBlogPosts } from "@/lib/vault";
 import type { Metadata } from 'next'
 import { BlogList } from "@/components/blog-list";
 import { notFound, redirect } from "next/navigation";
+import { isNotesUnlocked } from "@/lib/notes-auth";
+import { NotesUnlockStatus } from "@/components/notes-unlock-status";
 
 const POSTS_PER_PAGE = 6;
 
@@ -15,10 +17,11 @@ export const metadata: Metadata = {
 }
 
 export function generateStaticParams() {
+    // Public pages only — draft count must not affect static pagination.
     const allPosts = getBlogPosts();
     const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
-    return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, i) => ({
         page: String(i + 2),
     }));
 }
@@ -39,7 +42,8 @@ export default async function NotesPage({
         redirect('/notes');
     }
 
-    const allPosts = getBlogPosts();
+    const unlocked = await isNotesUnlocked();
+    const allPosts = getBlogPosts({ includeDrafts: unlocked });
     const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
     if (pageNum > totalPages) {
@@ -51,5 +55,10 @@ export default async function NotesPage({
         pageNum * POSTS_PER_PAGE
     );
 
-    return <BlogList posts={posts} currentPage={pageNum} totalPosts={allPosts.length} />;
+    return (
+        <>
+            <NotesUnlockStatus unlocked={unlocked} />
+            <BlogList posts={posts} currentPage={pageNum} totalPosts={allPosts.length} />
+        </>
+    );
 }
