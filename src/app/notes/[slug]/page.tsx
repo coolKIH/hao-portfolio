@@ -1,9 +1,12 @@
-import { getPostBySlug, getBlogPosts } from "@/lib/vault";
+import { getPostBySlug } from "@/lib/vault";
 import { notFound } from "next/navigation";
 import type { Metadata } from 'next';
 import ZonedTime from "@/components/zoned-time";
 import MdxArticle from "@/components/mdx-article";
 import { isNotesUnlocked } from "@/lib/notes-auth";
+
+// cookies() is used for draft gating — must be dynamic (not on-demand static).
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: {
     params: Promise<{ slug: string }>
@@ -24,17 +27,6 @@ export async function generateMetadata({ params }: {
             description: post.metadata.description,
         },
     };
-}
-
-// Allow on-demand render for draft slugs (not in generateStaticParams).
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-    // Only public posts are pre-rendered — drafts must never ship as static HTML.
-    const posts = getBlogPosts();
-    return posts.map((post) => ({
-        slug: post.slug,
-    }));
 }
 
 export default async function PostPage({ params }: {
